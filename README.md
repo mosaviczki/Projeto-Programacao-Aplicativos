@@ -6,4 +6,4 @@ Implementação de um software de gestão de finanças pessoais que visa auxilia
 # Tela inicial:
 ![Pagina home - Relatório mensal](https://github.com/mosaviczki/Projeto-Programacao-Aplicativos/assets/88504003/8f531af2-178a-4038-9605-2335d655c6bf)
 
-#Tela
+
