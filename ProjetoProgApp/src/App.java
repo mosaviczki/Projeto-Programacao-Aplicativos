@@ -1,5 +1,8 @@
+import db.BancoDados;
+import test.Teste;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        Teste.menu(BancoDados.conectar());   
     }
 }
