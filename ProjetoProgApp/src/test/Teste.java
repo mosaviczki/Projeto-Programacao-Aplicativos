@@ -3,7 +3,7 @@ package test;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import db.CategoriaDao;
+import dao.CategoriaDao;
 import entities.Categoria;
 
 public class Teste {
