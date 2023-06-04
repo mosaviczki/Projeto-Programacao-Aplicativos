@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import db.BancoDados;
 import entities.Categoria;
 
 public class CategoriaDao {
