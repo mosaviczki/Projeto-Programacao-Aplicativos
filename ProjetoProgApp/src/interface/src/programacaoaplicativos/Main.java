@@ -1,6 +1,10 @@
 
 package programacaoaplicativos;
 
+import Form.Organizacao;
+import Form.RelatorioAnual;
+import Form.RelatorioMensal;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,53 +13,122 @@ import sidebar.MenuItem;
 
 public class Main extends javax.swing.JFrame {
 
-
     public Main() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.menus.setBackground(new Color(0,0,83));
+        setForm(new RelatorioMensal());
         execute();
     }
     
     private void execute() {
         ImageIcon iconHome = new ImageIcon(getClass().getResource("/img/home.png"));
         ImageIcon iconModule = new ImageIcon(getClass().getResource("/img/modulo.png"));
+        ImageIcon iconSubMenu = new ImageIcon(getClass().getResource("/img/circle.png"));
+        //menu itens
+        MenuItem menuHome1 = new MenuItem(iconSubMenu, "Relatório Mensal", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               setForm(new RelatorioMensal());
+            }
+        });
+        MenuItem menuHome2 = new MenuItem(iconSubMenu, "Relatório Anual", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new RelatorioAnual());
+            }
+        });
+        MenuItem menuHome3 = new MenuItem(iconSubMenu, "Organização", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
         
-        MenuItem menuHome = new MenuItem(iconHome, "Home", null);
-        MenuItem menuModule = new MenuItem(iconModule, "Module", null);
+        MenuItem menuModulo1 = new MenuItem(iconSubMenu, "Rendimento", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
+        MenuItem menuModulo2 = new MenuItem(iconSubMenu, "Despesas", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
+        MenuItem menuModulo3 = new MenuItem(iconSubMenu, "Investimento a longo prazo", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
+        MenuItem menuModulo4 = new MenuItem(iconSubMenu, "Fundo de despesas ocasionais", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
+        MenuItem menuModulo5 = new MenuItem(iconSubMenu, "Resumo", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new Organizacao());
+            }
+        });
+        
+        
+        MenuItem menuHome = new MenuItem(iconHome, "Home", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                setForm(new RelatorioMensal());
+            }
+        },menuHome1, menuHome2, menuHome3); 
+        MenuItem menuModule = new MenuItem(iconModule, "Modulo", null, menuModulo1,menuModulo2,menuModulo3,menuModulo4,menuModulo5);
 
         addMenu(menuHome, menuModule);
     }
     
+    private void setForm(JComponent com){
+        panelBody.removeAll();
+        panelBody.add(com);
+        panelBody.repaint();
+        panelBody.revalidate();
+    }
     public void addMenu(MenuItem...menu){
         for (int i = 0; i < menu.length; i++) {
             menus.add(menu[i]);
-//            ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
-//            for (MenuItem m : subMenu) {
-//                addMenu(m);
-//            }
+            ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
+            for (MenuItem m : subMenu) {
+                addMenu(m);
+            }
         }
-        //menus.revalidate();
+        menus.repaint();
+        menus.revalidate();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel = new javax.swing.JPanel();
         sidebar = new sidebar.Sidebar();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane = new javax.swing.JScrollPane();
         menus = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
+        panelBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GMG System");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel.setMaximumSize(new java.awt.Dimension(210, 32767));
+        jPanel.setLayout(new javax.swing.BoxLayout(jPanel, javax.swing.BoxLayout.LINE_AXIS));
 
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane2.setBorder(null);
+        jScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane.setBorder(null);
 
         menus.setLayout(new javax.swing.BoxLayout(menus, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane2.setViewportView(menus);
+        jScrollPane.setViewportView(menus);
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
@@ -65,10 +138,12 @@ public class Main extends javax.swing.JFrame {
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidebarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(logo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(sidebarLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         sidebarLayout.setVerticalGroup(
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,26 +151,20 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(890, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel.add(sidebar);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        panelBody.setBackground(new java.awt.Color(255, 255, 255));
+        panelBody.setMinimumSize(new java.awt.Dimension(1100, 600));
+        panelBody.setLayout(new java.awt.BorderLayout());
+        jPanel.add(panelBody);
 
-        setSize(new java.awt.Dimension(1114, 607));
+        getContentPane().add(jPanel, java.awt.BorderLayout.CENTER);
+
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -132,10 +201,11 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jPanel;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel menus;
+    private javax.swing.JPanel panelBody;
     private sidebar.Sidebar sidebar;
     // End of variables declaration//GEN-END:variables
 }
