@@ -1,6 +1,10 @@
-
 package programacaoaplicativos;
 
+import Form.ModuloDespesas;
+import Form.ModuloFundoOcasional;
+import Form.ModuloInvestimentoLongoPrazo;
+import Form.ModuloRendimento;
+import Form.ModuloResumo;
 import Form.Organizacao;
 import Form.RelatorioAnual;
 import Form.RelatorioMensal;
@@ -16,7 +20,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.menus.setBackground(new Color(0,0,83));
+        this.menus.setBackground(Color.decode("#001253"));
         setForm(new RelatorioMensal());
         execute();
     }
@@ -48,31 +52,31 @@ public class Main extends javax.swing.JFrame {
         MenuItem menuModulo1 = new MenuItem(iconSubMenu, "Rendimento", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new Organizacao());
+                setForm(new ModuloRendimento());
             }
         });
         MenuItem menuModulo2 = new MenuItem(iconSubMenu, "Despesas", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new Organizacao());
+                setForm(new ModuloDespesas());
             }
         });
         MenuItem menuModulo3 = new MenuItem(iconSubMenu, "Investimento a longo prazo", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new Organizacao());
+                setForm(new ModuloInvestimentoLongoPrazo());
             }
         });
         MenuItem menuModulo4 = new MenuItem(iconSubMenu, "Fundo de despesas ocasionais", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new Organizacao());
+                setForm(new ModuloFundoOcasional());
             }
         });
         MenuItem menuModulo5 = new MenuItem(iconSubMenu, "Resumo", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new Organizacao());
+                setForm(new ModuloResumo());
             }
         });
         
