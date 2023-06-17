@@ -1,14 +1,13 @@
-package Form;
+package forms.modules;
 
 import actiontable.TableActionCellEditor;
 import actiontable.TableActionCellRender;
 import actiontable.TableActionEvent;
-import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
-public class ModuloDespesas extends javax.swing.JPanel {
+public class ModuloInvestimentoLongoPrazo extends javax.swing.JPanel {
 
-    public ModuloDespesas() {
+    public ModuloInvestimentoLongoPrazo() {
         initComponents();
         TableActionEvent event = new TableActionEvent() {
             @Override
@@ -20,9 +19,8 @@ public class ModuloDespesas extends javax.swing.JPanel {
                 model.removeRow(row);
             }
         };
-        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
-        btnAdd.setBackground(new Color(0,0,0,0));
+        table.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
     }
     
     
@@ -34,16 +32,13 @@ public class ModuloDespesas extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         labelTitle3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        cbCategory = new javax.swing.JComboBox<>();
         titleMonthly = new javax.swing.JLabel();
         titleOccasional = new javax.swing.JLabel();
         titleExpense = new javax.swing.JLabel();
-        titleCategorias = new javax.swing.JLabel();
         inputDespesas = new javax.swing.JTextField();
         inputMensal1 = new javax.swing.JTextField();
         inputMensal = new javax.swing.JTextField();
         buttonAddExpense = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -54,7 +49,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
         labelTitle3.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         labelTitle3.setForeground(new java.awt.Color(255, 255, 255));
         labelTitle3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        labelTitle3.setText("Módulo de despesas");
+        labelTitle3.setText("Módulo de Investimento a Longo Prazo");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -76,20 +71,11 @@ public class ModuloDespesas extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
 
-        cbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Casa", "Investimento", "Carro", "Alimentação" }));
-        cbCategory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCategoryActionPerformed(evt);
-            }
-        });
-
         titleMonthly.setText("Ocasional");
 
         titleOccasional.setText("Mensal");
 
-        titleExpense.setText("Despesas");
-
-        titleCategorias.setText("Categorias");
+        titleExpense.setText("Descrição");
 
         buttonAddExpense.setBackground(new java.awt.Color(255, 0, 51));
         buttonAddExpense.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
@@ -101,14 +87,6 @@ public class ModuloDespesas extends javax.swing.JPanel {
             }
         });
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus.png"))); // NOI18N
-        btnAdd.setBorder(null);
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,18 +94,9 @@ public class ModuloDespesas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleCategorias)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inputDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(titleExpense)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(inputDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titleExpense))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputMensal1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(titleOccasional))
@@ -147,41 +116,36 @@ public class ModuloDespesas extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(titleCategorias)
-                        .addComponent(titleExpense))
                     .addComponent(titleMonthly)
-                    .addComponent(titleOccasional))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(inputDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(inputMensal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(inputMensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonAddExpense))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAdd)
-                        .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(titleOccasional)
+                        .addComponent(titleExpense)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputMensal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputMensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAddExpense))
                 .addGap(17, 17, 17))
         );
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Categoria", "Descrição", "Mensal (12x)", "Ocasional", "Total", ""
+                "Investimento", "Mensal ", "Ocasional", "Total", ""
             }
         ));
         table.setRowHeight(40);
@@ -212,28 +176,13 @@ public class ModuloDespesas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCategoryActionPerformed
-
     private void buttonAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddExpenseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonAddExpenseActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        CategoryEdit frame = new CategoryEdit();
-        frame.setVisible(true);
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    public void Category(Variaveis val){
-        String nome = (val.getNome());
-        System.out.println(nome);
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton buttonAddExpense;
-    private javax.swing.JComboBox<String> cbCategory;
     private javax.swing.JTextField inputDespesas;
     private javax.swing.JTextField inputMensal;
     private javax.swing.JTextField inputMensal1;
@@ -242,7 +191,6 @@ public class ModuloDespesas extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelTitle3;
     private javax.swing.JTable table;
-    private javax.swing.JLabel titleCategorias;
     private javax.swing.JLabel titleExpense;
     private javax.swing.JLabel titleMonthly;
     private javax.swing.JLabel titleOccasional;

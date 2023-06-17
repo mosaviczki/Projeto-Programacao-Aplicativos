@@ -1,13 +1,13 @@
 package programacaoaplicativos;
 
-import Form.ModuloDespesas;
-import Form.ModuloFundoOcasional;
-import Form.ModuloInvestimentoLongoPrazo;
-import Form.ModuloRendimento;
-import Form.ModuloResumo;
-import Form.Organizacao;
-import Form.RelatorioAnual;
-import Form.RelatorioMensal;
+import forms.modules.ModuloDespesas;
+import forms.modules.ModuloFundoDespesasOcasionais;
+import forms.modules.ModuloInvestimentoLongoPrazo;
+import forms.modules.ModuloRendimento;
+import forms.modules.ModuloResumo;
+import forms.relatorio.Organizacao;
+import forms.relatorio.RelatorioAnual;
+import forms.relatorio.RelatorioMensal;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,13 +64,13 @@ public class Main extends javax.swing.JFrame {
         MenuItem menuModulo3 = new MenuItem(iconSubMenu, "Investimento a longo prazo", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new ModuloInvestimentoLongoPrazo());
+                setForm(new forms.modules.ModuloInvestimentoLongoPrazo());
             }
         });
         MenuItem menuModulo4 = new MenuItem(iconSubMenu, "Fundo de despesas ocasionais", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new ModuloFundoOcasional());
+                setForm(new ModuloFundoDespesasOcasionais());
             }
         });
         MenuItem menuModulo5 = new MenuItem(iconSubMenu, "Resumo", new ActionListener() {

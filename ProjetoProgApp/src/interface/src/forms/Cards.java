@@ -1,4 +1,4 @@
-package Form;
+package forms;
 
 import java.awt.Color;
 import java.awt.GradientPaint;

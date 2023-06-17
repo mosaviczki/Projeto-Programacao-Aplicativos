@@ -1,4 +1,4 @@
-package Form;
+package forms;
 
 public class Variaveis {
     private String nome;
