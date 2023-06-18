@@ -4,7 +4,6 @@ import entities.Investimento;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import db.BancoDados;
 import dao.InvestimentoDao;
