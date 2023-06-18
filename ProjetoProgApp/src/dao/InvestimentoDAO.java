@@ -1,5 +1,5 @@
 package dao;
 
-public class InvestimentoDAO {
+public class InvestimentoDao {
 
 }
