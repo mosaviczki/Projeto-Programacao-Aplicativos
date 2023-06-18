@@ -3,16 +3,16 @@ package entities;
 public class Fundo {
     private int id;
     private String descricao;
-    private double valor_mensal, valor_ocasional;
+    private double valorMensal, valorOcasional;
 
     public Fundo() {
     }
 
-    public Fundo(int id, String descricao, double valor_mensal, double valor_ocasional) {
+    public Fundo(int id, String descricao, double valorMensal, double valorOcasional) {
         this.id = id;
         this.descricao = descricao;
-        this.valor_mensal = valor_mensal;
-        this.valor_ocasional = valor_ocasional;
+        this.valorMensal = valorMensal;
+        this.valorOcasional = valorOcasional;
     }
 
     public int getId() {
@@ -23,12 +23,12 @@ public class Fundo {
         return descricao;
     }
 
-    public double getValor_mensal() {
-        return valor_mensal;
+    public double getValorMensal() {
+        return valorMensal;
     }
 
-    public double getValor_ocasional() {
-        return valor_ocasional;
+    public double getValorOcasional() {
+        return valorOcasional;
     }
 
     public void setId(int id) {
@@ -39,12 +39,12 @@ public class Fundo {
         this.descricao = descricao;
     }
 
-    public void setValor_mensal(double valor_mensal) {
-        this.valor_mensal = valor_mensal;
+    public void setValorMensal(double valorMensal) {
+        this.valorMensal = valorMensal;
     }
 
-    public void setValor_ocasional(double valor_ocasional) {
-        this.valor_ocasional = valor_ocasional;
+    public void setValorOcasional(double valorOcasional) {
+        this.valorOcasional = valorOcasional;
     }
 
 }

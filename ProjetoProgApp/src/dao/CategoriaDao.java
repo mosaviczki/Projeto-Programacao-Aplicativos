@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.BancoDados;
 import entities.Categoria;
@@ -51,6 +52,31 @@ public class CategoriaDao {
             BancoDados.desconectar();
         }
         return null;
+    }
+
+    public ArrayList<Categoria> findAll() throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Categoria> list = new ArrayList<Categoria>();
+
+        try {
+            statement = conn.prepareStatement("select * from categoria order by periodo");
+            result = statement.executeQuery();
+
+            while (result.next()) {
+                Categoria categoria = new Categoria();
+
+                categoria.setId(result.getInt("id"));
+                categoria.setNome(result.getString("nome"));
+
+                list.add(categoria);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
     }
 
     public void update(Categoria categoria) throws SQLException {

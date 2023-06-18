@@ -1,18 +1,20 @@
 package entities;
 
 public class Despesa {
-    private int id, frequencia, id_subcategoria;
+    private int id, frequencia;
     private Categoria categoria;
+    private Categoria subCategoria;
     private String descricao;
     private double valor;
 
     public Despesa() {
     }
 
-    public Despesa(int id, int frequencia, int id_subcategoria, Categoria categoria, String descricao, double valor) {
+    public Despesa(int id, int frequencia, Categoria categoria, Categoria subcategoria, String descricao,
+            double valor) {
         this.id = id;
         this.frequencia = frequencia;
-        this.id_subcategoria = id_subcategoria;
+        this.subCategoria = subcategoria;
         this.categoria = categoria;
         this.descricao = descricao;
         this.valor = valor;
@@ -26,8 +28,8 @@ public class Despesa {
         return frequencia;
     }
 
-    public int getId_subcategoria() {
-        return id_subcategoria;
+    public Categoria getSubCategoria() {
+        return subCategoria;
     }
 
     public Categoria getCategoria() {
@@ -50,8 +52,8 @@ public class Despesa {
         this.frequencia = frequencia;
     }
 
-    public void setId_subcategoria(int id_subcategoria) {
-        this.id_subcategoria = id_subcategoria;
+    public void setId_subcategoria(Categoria subCategoria) {
+        this.subCategoria = subCategoria;
     }
 
     public void setCategoria(Categoria categoria) {
@@ -65,7 +67,4 @@ public class Despesa {
     public void setValor(double valor) {
         this.valor = valor;
     }
-
-    
-
 }
