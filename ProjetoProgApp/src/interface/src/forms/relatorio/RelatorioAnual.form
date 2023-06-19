@@ -166,7 +166,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="M&#xf3;dulo Fundo de Despesas Ocasionais"/>
+            <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Mensal"/>
           </Properties>
         </Component>
       </SubComponents>
