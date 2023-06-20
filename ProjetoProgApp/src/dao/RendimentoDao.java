@@ -183,12 +183,35 @@ public class RendimentoDao {
     public double getValueMonthTotal(int month, int year) throws SQLException{
         PreparedStatement statement = null;
         ResultSet result = null;
+        double valueAnual = 0;
+
+        try{
+            statement = conn.prepareStatement("SELECT sum(valor_mensal) as valor FROM rendimento WHERE mes = ? AND ano = ?");
+            statement.setInt(1, month);
+            statement.setInt(2, year);
+            result = statement.executeQuery();
+
+            if(result.next()){
+                valueAnual = result.getDouble("valor");
+            }
+
+            double valueMensal = getValueMonthMensal(year);
+            return valueAnual+valueMensal;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public double getValueMonthMensal(int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
         double value = 0;
 
         try{
-            statement = conn.prepareStatement("SELECT sum(valor_mensal) + sum(valor_mensal) as valor FROM rendimento WHERE mes = ? AND ano = ?");
-            statement.setInt(1, month);
-            statement.setInt(2, year);
+            statement = conn.prepareStatement("SELECT sum(valor_mensal) as valor FROM rendimento WHERE ano = ?");
+            statement.setInt(1, year);
             result = statement.executeQuery();
 
             if(result.next()){
