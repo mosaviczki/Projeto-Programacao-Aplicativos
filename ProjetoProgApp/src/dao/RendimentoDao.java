@@ -136,4 +136,69 @@ public class RendimentoDao {
             BancoDados.desconectar();
         }
     }
+
+    public double getValueYearOcasional(int year) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        double value = 0;
+
+        try {
+            statement = conn.prepareStatement("select sum(valor_ocasional) as valor from rendimento where ano = ?");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            if (result.next()) {
+                value = result.getDouble("valor");
+            }
+        } finally {
+            BancoDados.finalizarResultSet(result);
+            BancoDados.finalizarStatement(statement);
+            BancoDados.desconectar();
+        }
+
+        return value;
+    }
+
+    public double getValueYearMensal(int year) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        double value = 0;
+
+        try{
+            statement = conn.prepareStatement("SELECT sum(valor_mensal) as valor FROM rendimento WHERE ano = ?");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            if(result.next()){
+                value = result.getDouble("valor");
+            }
+            return value*12;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public doble getValueMonthTotal(int month, int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        double value = 0;
+
+        try{
+            statement = conn.prepareStatement("SELECT sum(valor_mensal) + sum(valor_mensal) as valor FROM rendimento WHERE mes = ? AND ano = ?");
+            statement.setInt(1, month);
+            statement.setInt(2, year);
+            result = statement.executeQuery();
+
+            if(result.next()){
+                value = result.getDouble("valor");
+            }
+            return value;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
 }
