@@ -180,7 +180,7 @@ public class RendimentoDao {
         }
     }
 
-    public doble getValueMonthTotal(int month, int year) throws SQLException{
+    public double getValueMonthTotal(int month, int year) throws SQLException{
         PreparedStatement statement = null;
         ResultSet result = null;
         double value = 0;
