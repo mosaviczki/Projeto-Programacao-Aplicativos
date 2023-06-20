@@ -14,23 +14,25 @@ public class InvestimentoService {
     public InvestimentoService() {
     }
 
-    public void createRedimento(Investimento investimento) throws SQLException, IOException {
+    public void createInvestimento(Investimento investimento) throws SQLException, IOException {
         Connection conn = BancoDados.conectar();
         new InvestimentoDao(conn).create(investimento);
     }
 
-    public void updateRedimento(Investimento investimento) throws SQLException, IOException {
+    public void updateInvestimento(Investimento investimento) throws SQLException, IOException {
         Connection conn = BancoDados.conectar();
         new InvestimentoDao(conn).update(investimento);
     }
 
-    public void deleteRedimento(int id) throws SQLException, IOException {
+    public void deleteInvestimento(int id) throws SQLException, IOException {
         Connection conn = BancoDados.conectar();
         new InvestimentoDao(conn).delete(id);
     }
 
-    public List<Investimento> findAllRedimentos() throws SQLException, IOException {
+    public List<Investimento> findAllInvestimento() throws SQLException, IOException {
         Connection conn = BancoDados.conectar();
         return new InvestimentoDao(conn).findAll();
     }
+    
+    
 }
