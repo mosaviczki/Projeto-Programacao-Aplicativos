@@ -1,7 +1,6 @@
 package entities;
 
 public abstract class Resumo {
-    private double total;
     private double valorRendimentos;
     private double valorInvestimentos;
     private double valorFundos;
@@ -13,10 +12,6 @@ public abstract class Resumo {
     public abstract double getTotalDisponivel();
     public abstract double getFundoDespesasOcasionais();
     public abstract double getValorTotal();
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
     public double getValorRendimento() {
         return valorRendimentos;
