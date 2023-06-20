@@ -68,6 +68,37 @@ public class DespesaDao {
         }
     }
 
+    public Despesa findByName(String nomeDespesa) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try {
+            statement = conn.prepareStatement("select * from despesa where descricao = ?");
+            statement.setString(1, nomeDespesa);
+            result = statement.executeQuery();
+
+            if(result.next()) {
+                Despesa despesa = new Despesa();
+
+                despesa.setId(result.getInt("id"));
+                despesa.getCategoria().setId(result.getInt("id_categoria"));
+                despesa.setDescricao(result.getString("descricao"));
+                despesa.setValorMensal(result.getDouble("valor_mensal"));
+                despesa.setValorOcasional(result.getInt("valor_ocasional"));
+                despesa.setMes(result.getInt("mes"));
+                despesa.setAno(result.getInt("ano"));
+                despesa.calcularvalorDespesa();
+
+                return despesa;
+            }
+            return null;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
     public void update(Despesa despesa) throws SQLException {
         PreparedStatement statement = null;
 

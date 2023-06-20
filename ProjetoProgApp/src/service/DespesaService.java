@@ -40,4 +40,9 @@ public class DespesaService {
 
         return despesas;
     }
+
+    public Despesa findDespesaByName(String name) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new DespesaDao(conn).findByName(name);
+    }
 }
