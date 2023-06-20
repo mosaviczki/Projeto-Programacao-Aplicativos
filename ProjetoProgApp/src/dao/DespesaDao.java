@@ -21,13 +21,14 @@ public class DespesaDao {
 
         try {
             statement = conn.prepareStatement(
-                    "insert into despesa (id_categoria, id_subcategoria, descricao, frequencia, valor) values (?, ?, ?, ?, ?)");
+                    "insert into despesa (id_categoria, descricao, valor_mensal, valor_ocasional, mes, ano) values (?, ?, ?, ?, ?, ?)");
 
             statement.setInt(1, despesa.getCategoria().getId());
-            statement.setInt(2, despesa.getSubCategoria().getId());
-            statement.setString(3, despesa.getDescricao());
-            statement.setInt(4, despesa.getFrequencia());
-            statement.setDouble(5, despesa.getValor());
+            statement.setString(2, despesa.getDescricao());
+            statement.setDouble(3, despesa.getValorMensal());
+            statement.setDouble(4, despesa.getValorOcasional());
+            statement.setInt(5, despesa.getMes());
+            statement.setInt(6, despesa.getAno());
 
             statement.executeUpdate();
         } finally {
@@ -42,18 +43,20 @@ public class DespesaDao {
         ArrayList<Despesa> list = new ArrayList<Despesa>();
 
         try {
-            statement = conn.prepareStatement("select * from despesa order by id");
+            statement = conn.prepareStatement("select * from despesa order by mes");
             result = statement.executeQuery();
 
             while (result.next()) {
                 Despesa despesa = new Despesa();
 
                 despesa.setId(result.getInt("id"));
-                despesa.setCategoria(new CategoriaDao(conn).buscarPorId(result.getInt("id_categoria")));
+                despesa.getCategoria().setId(result.getInt("id_categoria"));
                 despesa.setDescricao(result.getString("descricao"));
-                despesa.setFrequencia(result.getInt("frequencia"));
-                despesa.setValor(result.getDouble("valor_despesa"));
-
+                despesa.setValorMensal(result.getDouble("valor_mensal"));
+                despesa.setValorOcasional(result.getInt("valor_ocasional"));
+                despesa.setMes(result.getInt("mes"));
+                despesa.setAno(result.getInt("ano"));
+                despesa.calcularvalorDespesa();
 
                 list.add(despesa);
             }
@@ -70,13 +73,15 @@ public class DespesaDao {
 
         try {
             statement = conn.prepareStatement(
-                    "update despesa set id_categoria = ?, descricao = ?, frequencia = ?, valor_despesa = ? where id = ?");
+                    "update despesa set id_categoria = ?, descricao = ?, valor_despesa = ?, valor_ocasional = ?, mes = ?, ano = ? where id = ?");
 
             statement.setInt(1, despesa.getCategoria().getId());
             statement.setString(2, despesa.getDescricao());
-            statement.setInt(3, despesa.getFrequencia());
-            statement.setDouble(4, despesa.getValor());
-            statement.setInt(5, despesa.getId());
+            statement.setDouble(3, despesa.getValorMensal());
+            statement.setDouble(4, despesa.getValorOcasional());
+            statement.setInt(5, despesa.getMes());
+            statement.setInt(6, despesa.getAno());
+            statement.setInt(7, despesa.getId());
 
             statement.executeUpdate();
         } finally {

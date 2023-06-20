@@ -1,35 +1,38 @@
 package entities;
 
 public class Despesa {
-    private int id, frequencia;
-    private Categoria categoria;
-    private Categoria subCategoria;
+    private int id, mes, ano;
     private String descricao;
-    private double valor;
-
+    private double valorDespesa;
+    private double valorMensal;
+    private double valorOcasional;
+    private Categoria categoria;
+    
     public Despesa() {
-    }
-
-    public Despesa(int id, int frequencia, Categoria categoria, Categoria subcategoria, String descricao,
-            double valor) {
-        this.id = id;
-        this.frequencia = frequencia;
-        this.subCategoria = subcategoria;
-        this.categoria = categoria;
-        this.descricao = descricao;
-        this.valor = valor;
+        this.valorDespesa = 0;
+        this.valorOcasional = 0;
+        this.valorMensal = 0;
+        this.categoria = new Categoria();
     }
 
     public int getId() {
         return id;
     }
 
-    public int getFrequencia() {
-        return frequencia;
+    public double getValorDespesa() {
+        return valorDespesa;
     }
 
-    public Categoria getSubCategoria() {
-        return subCategoria;
+    public int getMes() {
+        return mes;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public double getValorOcasional() {
+        return valorOcasional;
     }
 
     public Categoria getCategoria() {
@@ -40,20 +43,28 @@ public class Despesa {
         return descricao;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValorMensal() {
+        return valorMensal;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setFrequencia(int frequencia) {
-        this.frequencia = frequencia;
+    public void setValorDespesa(double valorDespesa) {
+        this.valorDespesa = valorDespesa;
     }
 
-    public void setId_subcategoria(Categoria subCategoria) {
-        this.subCategoria = subCategoria;
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public void setValorOcasional(double valorOcasional) {
+        this.valorOcasional = valorOcasional;
     }
 
     public void setCategoria(Categoria categoria) {
@@ -64,7 +75,18 @@ public class Despesa {
         this.descricao = descricao;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValorMensal(double valor) {
+        this.valorMensal = valor;
+    }
+
+    public void calcularvalorDespesa() {
+        this.valorDespesa = 0;
+
+        if (this.valorMensal > 0) {
+            this.valorDespesa += this.valorMensal * 12;
+        }
+        if (this.valorOcasional > 0) {
+            this.valorDespesa += this.valorOcasional;
+        }
     }
 }

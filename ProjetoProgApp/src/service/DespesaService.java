@@ -11,9 +11,10 @@ import dao.DespesaDao;
 import java.util.ArrayList;
 
 public class DespesaService {
-    public void createDespesa(Despesa despesa) throws SQLException, IOException {
+    public void createDespesa(Despesa despesa, String nomeCategoria) throws SQLException, IOException {
+        despesa.setCategoria(new CategoriaService().findCategoriaByName(nomeCategoria));
         Connection conn = BancoDados.conectar();
-        new DespesaDao(conn).create(despesa);  
+        new DespesaDao(conn).create(despesa);
     }
 
     public void updateDespesa(Despesa despesa) throws SQLException, IOException {
@@ -26,8 +27,14 @@ public class DespesaService {
         new DespesaDao(conn).delete(id);
     }
 
-    public ArrayList<Despesa> findAllDespesa(int id) throws SQLException, IOException {
+    public ArrayList<Despesa> findAllDespesa() throws SQLException, IOException {
         Connection conn = BancoDados.conectar();
-        return new DespesaDao(conn).findAll();
+        ArrayList<Despesa> despesas = new DespesaDao(conn).findAll();
+
+        for (Despesa despesa : despesas) {
+            despesa.setCategoria(new CategoriaService().findCategoriaById(despesa.getCategoria().getId()));
+        }
+
+        return despesas;
     }
 }

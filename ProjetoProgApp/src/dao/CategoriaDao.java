@@ -16,12 +16,12 @@ public class CategoriaDao {
         this.conn = conn;
     }
 
-    public void create(Categoria categoria) throws SQLException {
+    public void create(String name) throws SQLException {
         PreparedStatement statement = null;
 
         try {
             statement = conn.prepareStatement("insert into categoria (nome) values (?)");
-            statement.setString(1, categoria.getNome());
+            statement.setString(1, name);
             statement.executeUpdate();
         } finally {
             BancoDados.finalizarStatement(statement);
@@ -29,13 +29,37 @@ public class CategoriaDao {
         }
     }
 
-    public Categoria buscarPorId(int idCategoria) throws SQLException {
+    public Categoria buscarPorId(int id) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        Categoria categoria = null;
+
+        try {
+            statement = conn.prepareStatement("select * from categoria where id = ?");
+            statement.setInt(1, id);
+            result = statement.executeQuery();
+
+            if (result.next()) {
+                categoria = new Categoria();
+
+                categoria.setId(id);
+                categoria.setNome(result.getString("nome"));
+            }
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+        return categoria;
+    }
+
+    public Categoria findByName(String name) throws SQLException {
         PreparedStatement statement = null;
         ResultSet result = null;
 
         try {
-            statement = conn.prepareStatement("select * from categoria where id = ?");
-            statement.setInt(1, idCategoria);
+            statement = conn.prepareStatement("SELECT * FROM categoria WHERE nome = ?");
+            statement.setString(1, name);
             result = statement.executeQuery();
 
             if (result.next()) {
@@ -60,7 +84,7 @@ public class CategoriaDao {
         ArrayList<Categoria> list = new ArrayList<Categoria>();
 
         try {
-            statement = conn.prepareStatement("select * from categoria order by periodo");
+            statement = conn.prepareStatement("select * from categoria order by id");
             result = statement.executeQuery();
 
             while (result.next()) {
@@ -79,14 +103,15 @@ public class CategoriaDao {
         }
     }
 
-    public void update(Categoria categoria) throws SQLException {
+    public void update(String newName, int id) throws SQLException {
         PreparedStatement statement = null;
 
         try {
             statement = conn.prepareStatement(
-                    "update rendimento set nome = ? where id = ?");
+                    "update categoria set nome = ? where id = ?");
 
-            statement.setString(1, categoria.getNome());
+            statement.setString(1, newName);
+            statement.setInt(2, id);
 
             statement.executeUpdate();
         } finally {
@@ -95,12 +120,12 @@ public class CategoriaDao {
         }
     }
 
-    public void delete(int idCategoria) throws SQLException {
+    public void delete(int id) throws SQLException {
         PreparedStatement statement = null;
 
         try {
             statement = conn.prepareStatement("delete from categoria where id = ?");
-            statement.setInt(1, idCategoria);
+            statement.setInt(1, id);
 
             statement.executeUpdate();
         } finally {
