@@ -29,11 +29,17 @@ public class ModuloDespesas extends javax.swing.JPanel {
                 TableActionEvent event = new TableActionEvent() {
                         @Override
                         public void onDelete(int row) {
-                                if (table.isEditing()) {
-                                        table.getCellEditor().stopCellEditing();
+                                try {
+                                        if (table.isEditing()) 
+                                                table.getCellEditor().stopCellEditing();
+                                        
+                                        despesaService.deleteDespesa((int) table.getValueAt(row, 0));
+                                        DefaultTableModel model = (DefaultTableModel) table.getModel();
+                                        model.removeRow(row);
+                                } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(null, "Erro ao deletar despesa");
+                                        e.printStackTrace();
                                 }
-                                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                                model.removeRow(row);
                         }
                 };
                 table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
@@ -56,7 +62,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
                 titleExpense = new javax.swing.JLabel();
                 titleCategorias = new javax.swing.JLabel();
                 titleData = new javax.swing.JLabel();
-                inputDespesas = new javax.swing.JTextField();
+                inputDespesa = new javax.swing.JTextField();
                 inputMensal = new javax.swing.JTextField();
                 inputOcasional = new javax.swing.JTextField();
                 btnAddUpdate = new javax.swing.JButton();
@@ -151,7 +157,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
                                                                 .addGap(46, 46, 46)
                                                                 .addGroup(jPanel1Layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(inputDespesas,
+                                                                                .addComponent(inputDespesa,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 279,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,7 +225,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
                                                                                 .addGroup(jPanel1Layout
                                                                                                 .createParallelGroup(
                                                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                .addComponent(inputDespesas,
+                                                                                                .addComponent(inputDespesa,
                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +256,8 @@ public class ModuloDespesas extends javax.swing.JPanel {
                                 new Object[][] {
                                 },
                                 new String[] {
-                                                "ID", "Data", "Categoria", "Descrição", "Mensal (12x)", "Ocasional", "Total", ""
+                                                "ID", "Data", "Categoria", "Descrição", "Mensal (12x)", "Ocasional",
+                                                "Total", ""
                                 }));
                 table.setRowHeight(40);
                 table.setSelectionBackground(new java.awt.Color(204, 204, 255));
@@ -309,21 +316,52 @@ public class ModuloDespesas extends javax.swing.JPanel {
                 }
         }
 
-        private void btnAddUpdateActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonAddExpenseActionPerformed
+        private void btnAddUpdateActionPerformed(java.awt.event.ActionEvent evt) {
                 if (table.getSelectedRow() != -1)
                         atualizarDespesa();
                 else
                         adicionarDespesa();
 
-        }// GEN-LAST:event_buttonAddExpenseActionPerformed
+        }
 
         private void atualizarDespesa() {
+                try {
+                        Despesa despesa = new Despesa();
+                        String nomeCategoria = cbCategory.getSelectedItem().toString();
+                        int id = Integer.parseInt(
+                                        table.getValueAt(table.getSelectedRow(), 0).toString());
 
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
+                        String data = dateFormat.format(calendario.getDate());
+
+                        // verificar se ja nao tem um rendimento com o nome escolhido
+                        // if (!inputDespesa.getText().isEmpty())
+                        // throw new InfoDuplicadaException("Nome da despesa ja existe");
+
+                        despesa.setDescricao(inputDespesa.getText());
+                        despesa
+                                        .setValorMensal(inputMensal.getText().isEmpty() ? 0.0
+                                                        : Double.parseDouble(inputMensal.getText()));
+                        despesa.setValorOcasional(
+                                        inputOcasional.getText().isEmpty() ? 0.0
+                                                        : Double.parseDouble(inputOcasional.getText()));
+                        despesa.setMes(Integer.parseInt(data.split("/")[0]));
+                        despesa.setAno(Integer.parseInt(data.split("/")[1]));
+                        despesa.setId(id);
+
+                        despesaService.updateDespesa(despesa, nomeCategoria);
+
+                        atualizarTabela();
+                } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
+                                        JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace();
+                }
         }
 
         private void adicionarDespesa() {
                 try {
-                        if (inputDespesas.getText().isEmpty()
+                        if (inputDespesa.getText().isEmpty()
                                         || (inputOcasional.getText().isEmpty() && inputMensal.getText().isEmpty())) {
                                 JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro",
                                                 JOptionPane.ERROR_MESSAGE);
@@ -336,9 +374,11 @@ public class ModuloDespesas extends javax.swing.JPanel {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
                         String data = dateFormat.format(calendario.getDate());
 
-                        System.out.println("data: " + data);
+                        // verificar se ja nao tem um rendimento com o nome escolhido
+                        // if (!inputDespesa.getText().isEmpty())
+                        // throw new InfoDuplicadaException("Nome da despesa ja existe");
 
-                        despesa.setDescricao(inputDespesas.getText());
+                        despesa.setDescricao(inputDespesa.getText());
                         despesa.setValorOcasional(inputOcasional.getText().isEmpty() ? 0.0
                                         : Double.parseDouble(inputOcasional.getText()));
                         despesa.setValorMensal(
@@ -351,16 +391,16 @@ public class ModuloDespesas extends javax.swing.JPanel {
 
                         atualizarTabela();
                 } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Erro ao adicionar despesa", "Erro",
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
                                         JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
                 }
         }
 
-        private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
+        private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
                 CategoryEdit frame = new CategoryEdit();
                 frame.setVisible(true);
-        }// GEN-LAST:event_btnAddActionPerformed
+        }
 
         private void atualizarTabela() {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -386,7 +426,8 @@ public class ModuloDespesas extends javax.swing.JPanel {
                                 }
                         }
                 } catch (Exception e) {
-                        System.out.println("Erro ao atualizar tabela");
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
+                                        JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
                 }
         }
@@ -395,7 +436,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
         private javax.swing.JButton btnAdd;
         private javax.swing.JButton btnAddUpdate;
         private javax.swing.JComboBox<String> cbCategory;
-        private javax.swing.JTextField inputDespesas;
+        private javax.swing.JTextField inputDespesa;
         private javax.swing.JTextField inputOcasional;
         private javax.swing.JTextField inputMensal;
         private com.toedter.calendar.JDateChooser calendario;

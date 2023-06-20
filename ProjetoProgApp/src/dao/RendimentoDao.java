@@ -21,46 +21,20 @@ public class RendimentoDao {
 
         try {
             statement = conn.prepareStatement(
-                    "insert into rendimento (id_categoria, descricao, frequencia, valor_rendimento) values (?, ?, ?, ?, ?)");
+                    "insert into rendimento (id_categoria, descricao, valor_mensal, valor_ocasional, mes, ano) values (?, ?, ?, ?, ?, ?)");
 
             statement.setInt(1, rendimento.getCategoria().getId());
             statement.setString(2, rendimento.getDescricao());
-            statement.setInt(3, rendimento.getFrequencia());
-            statement.setDouble(4, rendimento.getValor_redimento());
+            statement.setDouble(3, rendimento.getValorMensal());
+            statement.setDouble(4, rendimento.getValorOcasional());
+            statement.setInt(5, rendimento.getMes());
+            statement.setInt(6, rendimento.getAno());
 
             statement.executeUpdate();
         } finally {
             BancoDados.finalizarStatement(statement);
             BancoDados.desconectar();
         }
-    }
-
-    public Rendimento buscarPorId(int idRendimento) throws SQLException {
-        PreparedStatement statement = null;
-        ResultSet result = null;
-
-        try {
-            statement = conn.prepareStatement("select * from rendimento where id = ?");
-            statement.setInt(1, idRendimento);
-            result = statement.executeQuery();
-
-            if (result.next()) {
-                Rendimento rendimento = new Rendimento();
-
-                rendimento.setId(result.getInt("id"));
-                rendimento.setCategoria(new CategoriaDao(conn).buscarPorId(result.getInt("id_categoria")));
-                rendimento.setDescricao(result.getString("descricao"));
-                rendimento.setFrequencia(result.getInt("frequencia"));
-                rendimento.setValor_redimento(result.getDouble("valor_rendimento"));
-
-                return rendimento;
-            }
-        } finally {
-            BancoDados.finalizarStatement(statement);
-            BancoDados.finalizarResultSet(result);
-            BancoDados.desconectar();
-        }
-        return null;
     }
 
     public ArrayList<Rendimento> findAll() throws SQLException {
@@ -73,23 +47,27 @@ public class RendimentoDao {
             result = statement.executeQuery();
 
             while (result.next()) {
+                // Lancamento rendimento = new Rendimento();
                 Rendimento rendimento = new Rendimento();
 
                 rendimento.setId(result.getInt("id"));
-                rendimento.setCategoria(new CategoriaDao(conn).buscarPorId(result.getInt("id_categoria")));
+                rendimento.getCategoria().setId(result.getInt("id_categoria"));
                 rendimento.setDescricao(result.getString("descricao"));
-                rendimento.setFrequencia(result.getInt("frequencia"));
-                rendimento.setValor_redimento(result.getDouble("valor_rendimento"));
-
+                rendimento.setValorMensal(result.getDouble("valor_mensal"));
+                rendimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                rendimento.setMes(result.getInt("mes"));
+                rendimento.setAno(result.getInt("ano"));
+                rendimento.calcularValorRendimento();
 
                 list.add(rendimento);
             }
-            return list;
         } finally {
-            BancoDados.finalizarStatement(statement);
             BancoDados.finalizarResultSet(result);
+            BancoDados.finalizarStatement(statement);
             BancoDados.desconectar();
         }
+
+        return list;
     }
 
     public void update(Rendimento rendimento) throws SQLException {
@@ -97,13 +75,15 @@ public class RendimentoDao {
 
         try {
             statement = conn.prepareStatement(
-                    "update rendimento set id_categoria = ?, descricao = ?, frequencia = ?, valor_rendimento = ? where id = ?");
+                    "update rendimento set id_categoria = ?, descricao = ?, valor_mensal = ?, valor_ocasional = ?, mes = ?, ano = ? where id = ?");
 
             statement.setInt(1, rendimento.getCategoria().getId());
             statement.setString(2, rendimento.getDescricao());
-            statement.setInt(3, rendimento.getFrequencia());
-            statement.setDouble(4, rendimento.getValor_redimento());
-            statement.setInt(5, rendimento.getId());
+            statement.setDouble(3, rendimento.getValorMensal());
+            statement.setDouble(4, rendimento.getValorOcasional());
+            statement.setInt(5, rendimento.getMes());
+            statement.setInt(6, rendimento.getAno());
+            statement.setInt(7, rendimento.getId());
 
             statement.executeUpdate();
         } finally {

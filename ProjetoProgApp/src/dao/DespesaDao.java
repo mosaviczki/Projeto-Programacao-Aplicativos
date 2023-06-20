@@ -73,7 +73,7 @@ public class DespesaDao {
 
         try {
             statement = conn.prepareStatement(
-                    "update despesa set id_categoria = ?, descricao = ?, valor_despesa = ?, valor_ocasional = ?, mes = ?, ano = ? where id = ?");
+                    "update despesa set id_categoria = ?, descricao = ?, valor_mensal = ?, valor_ocasional = ?, mes = ?, ano = ? where id = ?");
 
             statement.setInt(1, despesa.getCategoria().getId());
             statement.setString(2, despesa.getDescricao());
