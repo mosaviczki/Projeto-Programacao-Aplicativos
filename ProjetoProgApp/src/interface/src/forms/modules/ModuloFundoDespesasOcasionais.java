@@ -2,6 +2,7 @@ package forms.modules;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,9 @@ public class ModuloFundoDespesasOcasionais extends javax.swing.JPanel {
 		model.fireTableDataChanged();
 		model.setRowCount(0);
 		FundoService fundoService = new FundoService();
-
+		
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
+		
 		List<Fundo> fundos = fundoService.findAllFundo();
 
 		for (Fundo fundo : fundos){
@@ -62,9 +65,9 @@ public class ModuloFundoDespesasOcasionais extends javax.swing.JPanel {
 					fundo.getId(),
 					fundo.getMes()+"/"+fundo.getAno(),
 					fundo.getDescricao(),
-					fundo.getValorMensal(),
-					fundo.getValorOcasional(),
-					fundo.getValorMensal()*12+fundo.getValorOcasional()
+					"R$ ", decimalFormat.format(fundo.getValorMensal()),
+					"R$ ", decimalFormat.format(fundo.getValorOcasional()),
+					"R$ ", decimalFormat.format(fundo.getValorMensal()*12+fundo.getValorOcasional())
 			});
 			
 		}
