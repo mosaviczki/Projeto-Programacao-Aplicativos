@@ -2,6 +2,7 @@ package forms.modules;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,17 +55,19 @@ public class ModuloInvestimentoLongoPrazo extends javax.swing.JPanel {
 		model.fireTableDataChanged();
 		model.setRowCount(0);
 		InvestimentoService investimentoService = new InvestimentoService();
+		
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 		List<Investimento> investimentos = investimentoService.findAllInvestimento();
 
 		for (Investimento investimento : investimentos){
 			model.addRow(new Object[]{
-			investimento.getId(),
-			investimento.getMes()+"/"+investimento.getAno(),
-			investimento.getDescricao(),
-			investimento.getValorMensal(),
-			investimento.getValorOcasional(),
-			investimento.getValorMensal()*12+investimento.getValorOcasional()
+				investimento.getId(),
+				investimento.getMes()+"/"+investimento.getAno(),
+				investimento.getDescricao(),
+				"R$ ", decimalFormat.format(investimento.getValorMensal()),
+				"R$ ", decimalFormat.format(investimento.getValorOcasional()),
+				"R$ ", decimalFormat.format(investimento.getValorMensal()*12+investimento.getValorOcasional())
 			});
 			
 		}
