@@ -21,10 +21,12 @@ public class InvestimentoDao{
         
         try{
             statement = conn.prepareStatement(
-                "INSERT INTO investimento (descricao, valor_mensal, valor_ocasional) VALUES (?, ?, ?)");
+                "INSERT INTO investimento (descricao, valor_mensal, valor_ocasional, mes, ano) VALUES (?, ?, ?, ?, ?)");
             statement.setString(1, investimento.getDescricao());
             statement.setDouble(2, investimento.getValorMensal());
             statement.setDouble(3, investimento.getValorOcasional());
+            statement.setDouble(4, investimento.getMes());
+            statement.setDouble(5, investimento.getAno());
 
             statement.executeUpdate();
         } finally {
@@ -49,6 +51,8 @@ public class InvestimentoDao{
                 investimento.setDescricao(result.getString("descricao"));
                 investimento.setValorMensal(result.getDouble("valor_mensal"));
                 investimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                investimento.setMes(result.getInt("mes"));
+                investimento.setAno(result.getInt("ano"));
 
                 list.add(investimento);
             }
@@ -64,12 +68,15 @@ public class InvestimentoDao{
         PreparedStatement statement = null;
 
         try{
+        	System.out.println(investimento.getId());
             statement = conn.prepareStatement(
-                "UPDATE investimento SET descricao = ?, valor_mensal = ?, valor_ocasional = ? WHERE id = ?");
+                "UPDATE investimento SET descricao = ?, valor_mensal = ?, valor_ocasional = ?, mes = ?, ano = ? WHERE id = ?");
             statement.setString(1, investimento.getDescricao());
             statement.setDouble(2, investimento.getValorMensal());
             statement.setDouble(3, investimento.getValorOcasional());
-            statement.setInt(4, investimento.getId());
+            statement.setDouble(4, investimento.getMes());
+            statement.setDouble(5, investimento.getAno());
+            statement.setInt(6, investimento.getId());
 
             statement.executeUpdate();
         } finally {

@@ -21,11 +21,13 @@ public class FundoDao {
 
         try {
             statement = conn.prepareStatement(
-                    "insert into fundo (descricao, valor_mensal, valor_ocasional) values (?, ?, ?)");
+                    "insert into fundo (descricao, valor_mensal, valor_ocasional, mes, ano) values (?, ?, ?, ?, ?)");
 
             statement.setString(1, fundo.getDescricao());
             statement.setDouble(2, fundo.getValorMensal());
             statement.setDouble(3, fundo.getValorOcasional());
+            statement.setDouble(4, fundo.getMes());
+            statement.setDouble(5, fundo.getAno());
 
             statement.executeUpdate();
         } finally {
@@ -50,6 +52,8 @@ public class FundoDao {
                 fundo.setDescricao(result.getString("descricao"));
                 fundo.setValorMensal(result.getDouble("valor_mensal"));
                 fundo.setValorOcasional(result.getDouble("valor_ocasional"));
+                fundo.setMes(result.getInt("mes"));
+                fundo.setAno(result.getInt("ano"));
 
                 list.add(fundo);
             }
@@ -71,7 +75,9 @@ public class FundoDao {
             statement.setString(1, fundo.getDescricao());
             statement.setDouble(2, fundo.getValorMensal());
             statement.setDouble(3, fundo.getValorOcasional());
-            statement.setInt(4, fundo.getId());
+            statement.setDouble(4, fundo.getMes());
+            statement.setDouble(5, fundo.getAno());
+            statement.setInt(6, fundo.getId());
 
             statement.executeUpdate();
         } finally {
