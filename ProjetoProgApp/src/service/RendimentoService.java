@@ -40,4 +40,9 @@ public class RendimentoService {
 
         return rendimentos;
     }
+
+    public Rendimento findRendimentoByName(String name) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new RendimentoDao(conn).findByName(name);
+    }
 }

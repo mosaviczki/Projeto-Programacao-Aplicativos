@@ -70,6 +70,37 @@ public class RendimentoDao {
         return list;
     }
 
+    public Rendimento findByName(String nomeRendimento) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try {
+            statement = conn.prepareStatement("select * from rendimento where descricao = ?");
+            statement.setString(1, nomeRendimento);
+            result = statement.executeQuery();
+
+            if (result.next()) {
+                Rendimento rendimento = new Rendimento();
+
+                rendimento.setId(result.getInt("id"));
+                rendimento.getCategoria().setId(result.getInt("id_categoria"));
+                rendimento.setDescricao(result.getString("descricao"));
+                rendimento.setValorMensal(result.getDouble("valor_mensal"));
+                rendimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                rendimento.setMes(result.getInt("mes"));
+                rendimento.setAno(result.getInt("ano"));
+                rendimento.calcularValorRendimento();
+
+                return rendimento;
+            }
+            return null;
+        } finally {
+            BancoDados.finalizarResultSet(result);
+            BancoDados.finalizarStatement(statement);
+            BancoDados.desconectar();
+        }
+    }
+
     public void update(Rendimento rendimento) throws SQLException {
         PreparedStatement statement = null;
 

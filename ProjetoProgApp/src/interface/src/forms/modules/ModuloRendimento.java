@@ -33,10 +33,18 @@ public class ModuloRendimento extends javax.swing.JPanel {
                                 try {
                                         if (rendimentoTable.isEditing())
                                                 rendimentoTable.getCellEditor().stopCellEditing();
-
-                                        rendimentoService.deleteRendimento((int) rendimentoTable.getValueAt(row, 0));
-                                        DefaultTableModel model = (DefaultTableModel) rendimentoTable.getModel();
-                                        model.removeRow(row);
+                                        if (JOptionPane.showConfirmDialog(null,
+                                                        "Tem certeza que deseja deletar este rendimento?",
+                                                        "Deletar rendimento",
+                                                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                                rendimentoService.deleteRendimento(
+                                                                (int) rendimentoTable.getValueAt(row, 0));
+                                                JOptionPane.showMessageDialog(null, "Rendimento deletado com sucesso!",
+                                                                "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                                                DefaultTableModel model = (DefaultTableModel) rendimentoTable
+                                                                .getModel();
+                                                model.removeRow(row);
+                                        }
                                 } catch (Exception e) {
                                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
                                                         JOptionPane.ERROR_MESSAGE);
@@ -316,17 +324,34 @@ public class ModuloRendimento extends javax.swing.JPanel {
         }
 
         // Botão para adicionar rendimento
-        private void buttonAddRendimentoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonAddExpenseActionPerformed
-                if (rendimentoTable.getSelectedRow() != -1)
-                        atualizarRendimento();
-                else
-                        adicionarRendimento();
+        private void buttonAddRendimentoActionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                        if (inputRendimento.getText().isEmpty())
+                                throw new Exception("Campo de rendimentos vazio!");
+
+                        if (calendario.getDate() == null)
+                                throw new Exception("Selecione uma data!");
+
+                        if (inputOcasional.getText().isEmpty() && inputMensal.getText().isEmpty())
+                                throw new Exception("Preencha valor Mensal ou Ocasional!");
+
+                        if (rendimentoTable.getSelectedRow() != -1)
+                                atualizarRendimento();
+                        else
+                                adicionarRendimento();
+                } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace();
+                }
 
                 atualizarTabela();
-        }// GEN-LAST:event_buttonAddExpenseActionPerformed
+        }
 
         private void atualizarRendimento() {
                 try {
+                        if (rendimentoService.findRendimentoByName(inputRendimento.getText()) != null)
+                                throw new Exception("Nome de Rendimento já cadastrado!");
+
                         Rendimento rendimento = new Rendimento();
                         String nomeCategoria = cbCategory.getSelectedItem().toString();
                         int id = Integer.parseInt(
@@ -335,17 +360,11 @@ public class ModuloRendimento extends javax.swing.JPanel {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
                         String data = dateFormat.format(calendario.getDate());
 
-                        // verificar se ja nao tem um rendimento com o nome escolhido
-                        // if(!inputRendimento.getText().isEmpty())
-                        // throw new InfoDuplicadaException("Nome do rendimento ja existe");
-
                         rendimento.setDescricao(inputRendimento.getText());
-                        rendimento
-                                        .setValorMensal(inputMensal.getText().isEmpty() ? 0.0
-                                                        : Double.parseDouble(inputMensal.getText()));
-                        rendimento.setValorOcasional(
-                                        inputOcasional.getText().isEmpty() ? 0.0
-                                                        : Double.parseDouble(inputOcasional.getText()));
+                        rendimento.setValorMensal(inputMensal.getText().isEmpty() ? 0
+                                        : Double.parseDouble(inputMensal.getText()));
+                        rendimento.setValorOcasional(inputOcasional.getText().isEmpty() ? 0
+                                        : Double.parseDouble(inputOcasional.getText()));
                         rendimento.setMes(Integer.parseInt(data.split("/")[0]));
                         rendimento.setAno(Integer.parseInt(data.split("/")[1]));
                         rendimento.setId(id);
@@ -362,12 +381,14 @@ public class ModuloRendimento extends javax.swing.JPanel {
 
         private void adicionarRendimento() {
                 try {
-                        // fazer verificacao de input separado para descricao e valor mensal e ocasional
-                        if (inputRendimento.getText().isEmpty()
-                                        || (inputOcasional.getText().isEmpty() && inputMensal.getText().isEmpty())) {
-                                JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro",
-                                                JOptionPane.ERROR_MESSAGE);
-                                return;
+                        if (rendimentoService.findRendimentoByName(inputRendimento.getText()) != null) {
+                                int opcao = JOptionPane.showConfirmDialog(null,
+                                                "Rendimento já existe, deseja criar novo?", "Confirmação",
+                                                JOptionPane.YES_NO_OPTION);
+                                if (opcao == JOptionPane.NO_OPTION) {
+                                        inputRendimento.setText("");
+                                        return;
+                                }
                         }
 
                         Rendimento rendimento = new Rendimento();
@@ -376,17 +397,11 @@ public class ModuloRendimento extends javax.swing.JPanel {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
                         String data = dateFormat.format(calendario.getDate());
 
-                        // verificar se ja nao tem um rendimento com o nome escolhido
-                        // if(!inputRendimento.getText().isEmpty())
-                        // throw new InfoDuplicadaException("Nome do rendimento ja existe");
-
                         rendimento.setDescricao(inputRendimento.getText());
-                        rendimento
-                                        .setValorMensal(inputMensal.getText().isEmpty() ? 0.0
-                                                        : Double.parseDouble(inputMensal.getText()));
-                        rendimento.setValorOcasional(
-                                        inputOcasional.getText().isEmpty() ? 0.0
-                                                        : Double.parseDouble(inputOcasional.getText()));
+                        rendimento.setValorMensal(inputMensal.getText().isEmpty() ? 0
+                                        : Double.parseDouble(inputMensal.getText()));
+                        rendimento.setValorOcasional(inputOcasional.getText().isEmpty() ? 0
+                                        : Double.parseDouble(inputOcasional.getText()));
                         rendimento.setMes(Integer.parseInt(data.split("/")[0]));
                         rendimento.setAno(Integer.parseInt(data.split("/")[1]));
 
