@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public abstract class Resumo {
     private String descricao;
     private double total;
-    private Rendimento rendimento;
-    private Investimento investimento;
-    private Fundo fundo;
+    private ArrayList<Rendimento> rendimento;
+    private ArrayList<Investimento> investimento;
+    private ArrayList<Fundo> fundo;
     private ArrayList<Despesa> listaDespesas;
 
     public Resumo() {
@@ -32,27 +32,27 @@ public abstract class Resumo {
         this.total = total;
     }
 
-    public Rendimento getRendimento() {
+    public ArrayList<Rendimento> getRendimento() {
         return rendimento;
     }
 
-    public void setRendimento(Rendimento rendimento) {
+    public void setRendimento(ArrayList<Rendimento> rendimento) {
         this.rendimento = rendimento;
     }
 
-    public Investimento getInvestimento() {
+    public ArrayList<Investimento> getInvestimento() {
         return investimento;
     }
 
-    public void setInvestimento(Investimento investimento) {
+    public void setInvestimento(ArrayList<Investimento> investimento) {
         this.investimento = investimento;
     }
 
-    public Fundo getFundo() {
+    public ArrayList<Fundo> getFundo() {
         return fundo;
     }
 
-    public void setFundo(Fundo fundo) {
+    public void setFundo(ArrayList<Fundo> fundo) {
         this.fundo = fundo;
     }
 
@@ -63,4 +63,6 @@ public abstract class Resumo {
     public void setListaDespesas(ArrayList<Despesa> listaDespesas) {
         this.listaDespesas = listaDespesas;
     }
+
+    
 }
