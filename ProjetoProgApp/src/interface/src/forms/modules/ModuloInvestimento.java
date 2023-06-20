@@ -66,9 +66,9 @@ public class ModuloInvestimento extends javax.swing.JPanel {
                     investimento.getId(),
                     investimento.getMes() + "/" + investimento.getAno(),
                     investimento.getDescricao(),
-                    "R$ ", decimalFormat.format(investimento.getValorMensal()),
-                    "R$ ", decimalFormat.format(investimento.getValorOcasional()),
-                    "R$ ", decimalFormat.format(investimento.getValorMensal() * 12 + investimento.getValorOcasional())
+                    "R$ " + decimalFormat.format(investimento.getValorMensal()),
+                    "R$ " + decimalFormat.format(investimento.getValorOcasional()),
+                    "R$ " + decimalFormat.format(investimento.getValorMensal() * 12 + investimento.getValorOcasional())
             });
 
         }

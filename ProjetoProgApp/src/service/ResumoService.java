@@ -17,14 +17,23 @@ public class ResumoService {
         return resumo;
     }
 
-    // public ResumoAnual getResumoAnual(int ano) throws SQLException, IOException {
-    //     ResumoAnual resumo = new ResumoAnual();
-    //     resumo.setValorRendimento(new RendimentoService().getRendimentoTotal(ano));
-    //     resumo.setValorDespesas(new DespesaService().getDespesaTotal(ano));
-    //     resumo.setValorFundos(new FundoService().getFundoTotal(ano));
-    //     resumo.setValorInvestimento(new InvestimentoService().getInvestimentoTotal(ano));
+    public ResumoAnual getResumoAnualMensal(int ano) throws SQLException, IOException {
+        ResumoAnual resumo = new ResumoAnual();
+        resumo.setValorRendimento(new RendimentoService().getRendimentoMensal(ano));
+        resumo.setValorDespesas(new DespesaService().getDespesaMensal(ano));
+        resumo.setValorFundos(new FundoService().getFundoMensal(ano));
+        resumo.setValorInvestimento(new InvestimentoService().getInvestimentoMensal(ano));
 
+        return resumo;
+    }
 
-    //     return resumo;
-    // }
+    public ResumoAnual getResumoAnualOcasional(int ano) throws SQLException, IOException {
+        ResumoAnual resumo = new ResumoAnual();
+        resumo.setValorRendimento(new RendimentoService().getRendimentoOcasional(ano));
+        resumo.setValorDespesas(new DespesaService().getDespesaOcasional(ano));
+        resumo.setValorFundos(new FundoService().getFundoOcasional(ano));
+        resumo.setValorInvestimento(new InvestimentoService().getInvestimentoOcasional(ano));
+
+        return resumo;
+    }
 }

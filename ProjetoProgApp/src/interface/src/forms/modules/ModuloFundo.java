@@ -65,15 +65,14 @@ public class ModuloFundo extends javax.swing.JPanel {
                                         fundo.getId(),
                                         fundo.getMes() + "/" + fundo.getAno(),
                                         fundo.getDescricao(),
-                                        "R$ ", decimalFormat.format(fundo.getValorMensal()),
-                                        "R$ ", decimalFormat.format(fundo.getValorOcasional()),
-                                        "R$ ",
+                                        "R$ " + decimalFormat.format(fundo.getValorMensal()),
+                                        "R$ " + decimalFormat.format(fundo.getValorOcasional()),
+                                        "R$ " + 
                                         decimalFormat.format(fundo.getValorMensal() * 12 + fundo.getValorOcasional())
                         });
-
                 }
         }
-        
+
         private void initComponents() {
 
                 jPanel6 = new javax.swing.JPanel();
