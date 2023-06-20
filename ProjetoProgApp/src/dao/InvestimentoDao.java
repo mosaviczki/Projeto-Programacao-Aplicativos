@@ -147,7 +147,7 @@ public class InvestimentoDao{
         double value = 0;
 
         try{
-            statement = conn.prepareStatement("SELECT sum(valor_mensal) + sum(valor_ocasional) sum as valor FROM investimento WHERE mes = ? AND ano = ?");
+            statement = conn.prepareStatement("SELECT sum(valor_mensal) + sum(valor_ocasional) as valor FROM investimento WHERE mes = ? AND ano = ?");
             statement.setInt(1, month);
             statement.setInt(2, year);
             result = statement.executeQuery();
