@@ -187,4 +187,64 @@ public class InvestimentoDao{
         }
     }
 
+    public ArrayList<Investimento> getInvestimentoByMonth(int month) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Investimento> list = new ArrayList<Investimento>();
+
+        try{
+            statement = conn.prepareStatement("SELECT * FROM investimento WHERE mes = ? order by id");
+            statement.setInt(1, month);
+            result = statement.executeQuery();
+
+            while(result.next()){
+                Investimento investimento = new Investimento();
+
+                investimento.setId(result.getInt("id"));
+                investimento.setDescricao(result.getString("descricao"));
+                investimento.setValorMensal(result.getDouble("valor_mensal"));
+                investimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                investimento.setMes(result.getInt("mes"));
+                investimento.setAno(result.getInt("ano"));
+
+                list.add(investimento);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public ArrayList<Investimento> getInvestimentoByYear(int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Investimento> list = new ArrayList<Investimento>();
+
+        try{
+            statement = conn.prepareStatement("SELECT * FROM investimento WHERE ano = ? order by id");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            while(result.next()){
+                Investimento investimento = new Investimento();
+
+                investimento.setId(result.getInt("id"));
+                investimento.setDescricao(result.getString("descricao"));
+                investimento.setValorMensal(result.getDouble("valor_mensal"));
+                investimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                investimento.setMes(result.getInt("mes"));
+                investimento.setAno(result.getInt("ano"));
+
+                list.add(investimento);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
 }

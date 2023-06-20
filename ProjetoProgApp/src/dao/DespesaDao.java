@@ -222,4 +222,100 @@ public class DespesaDao {
             BancoDados.desconectar();
         }
     }
+
+    public ArrayList<Despesa> getDespesaByMonth(int month) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Despesa> list = new ArrayList<Despesa>();
+
+        try {
+            statement = conn.prepareStatement("select * from despesa where mes = ? order by id");
+            statement.setInt(1, month);
+            result = statement.executeQuery();
+
+            while(result.next()) {
+                Despesa despesa = new Despesa();
+
+                despesa.setId(result.getInt("id"));
+                despesa.getCategoria().setId(result.getInt("id_categoria"));
+                despesa.setDescricao(result.getString("descricao"));
+                despesa.setValorMensal(result.getDouble("valor_mensal"));
+                despesa.setValorOcasional(result.getInt("valor_ocasional"));
+                despesa.setMes(result.getInt("mes"));
+                despesa.setAno(result.getInt("ano"));
+                despesa.calcularvalorDespesa();
+
+                list.add(despesa);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public ArrayList<Despesa> getDespesaByYear(int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Despesa> list = new ArrayList<Despesa>();
+
+        try {
+            statement = conn.prepareStatement("select * from despesa where ano = ? order by id");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            while(result.next()) {
+                Despesa despesa = new Despesa();
+
+                despesa.setId(result.getInt("id"));
+                despesa.getCategoria().setId(result.getInt("id_categoria"));
+                despesa.setDescricao(result.getString("descricao"));
+                despesa.setValorMensal(result.getDouble("valor_mensal"));
+                despesa.setValorOcasional(result.getInt("valor_ocasional"));
+                despesa.setMes(result.getInt("mes"));
+                despesa.setAno(result.getInt("ano"));
+                despesa.calcularvalorDespesa();
+
+                list.add(despesa);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public ArrayList<Despesa> getDespesaByCategory(int category) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Despesa> list = new ArrayList<Despesa>();
+
+        try {
+            statement = conn.prepareStatement("select * from despesa where id_categoria = ? order by id");
+            statement.setInt(1, category);
+            result = statement.executeQuery();
+
+            while(result.next()) {
+                Despesa despesa = new Despesa();
+
+                despesa.setId(result.getInt("id"));
+                despesa.getCategoria().setId(result.getInt("id_categoria"));
+                despesa.setDescricao(result.getString("descricao"));
+                despesa.setValorMensal(result.getDouble("valor_mensal"));
+                despesa.setValorOcasional(result.getInt("valor_ocasional"));
+                despesa.setMes(result.getInt("mes"));
+                despesa.setAno(result.getInt("ano"));
+                despesa.calcularvalorDespesa();
+
+                list.add(despesa);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
 }

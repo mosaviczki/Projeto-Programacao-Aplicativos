@@ -187,4 +187,64 @@ public class FundoDao {
             BancoDados.desconectar();
         }
     }
+
+    public ArrayList<Fundo> getFundoByMonth(int month) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Fundo> list = new ArrayList<Fundo>();
+
+        try {
+            statement = conn.prepareStatement("select * from fundo where mes = ? order by id");
+            statement.setInt(1, month);
+            result = statement.executeQuery();
+
+            while (result.next()) {
+                Fundo fundo = new Fundo();
+
+                fundo.setId(result.getInt("id"));
+                fundo.setDescricao(result.getString("descricao"));
+                fundo.setValorMensal(result.getDouble("valor_mensal"));
+                fundo.setValorOcasional(result.getDouble("valor_ocasional"));
+                fundo.setMes(result.getInt("mes"));
+                fundo.setAno(result.getInt("ano"));
+
+                list.add(fundo);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public ArrayList<Fundo> getFundoByYear(int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Fundo> list = new ArrayList<Fundo>();
+
+        try {
+            statement = conn.prepareStatement("select * from fundo where ano = ? order by id");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            while (result.next()) {
+                Fundo fundo = new Fundo();
+
+                fundo.setId(result.getInt("id"));
+                fundo.setDescricao(result.getString("descricao"));
+                fundo.setValorMensal(result.getDouble("valor_mensal"));
+                fundo.setValorOcasional(result.getDouble("valor_ocasional"));
+                fundo.setMes(result.getInt("mes"));
+                fundo.setAno(result.getInt("ano"));
+
+                list.add(fundo);
+            }
+            return list;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
 }

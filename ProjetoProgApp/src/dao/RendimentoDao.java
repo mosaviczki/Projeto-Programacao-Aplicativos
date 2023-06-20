@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.BancoDados;
+import entities.Investimento;
 import entities.Rendimento;
 
 public class RendimentoDao {
@@ -218,6 +219,104 @@ public class RendimentoDao {
                 value = result.getDouble("valor");
             }
             return value;
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+    }
+
+    public ArrayList<Rendimento> getRendimentoByMonth(int month) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Rendimento> list = new ArrayList<Rendimento>();
+
+        try{
+            statement = conn.prepareStatement("SELECT * FROM rendimento WHERE mes = ? order by id");
+            statement.setInt(1, month);
+            result = statement.executeQuery();
+
+            while(result.next()){
+                Rendimento rendimento = new Rendimento();
+
+                rendimento.setId(result.getInt("id"));
+                rendimento.getCategoria().setId(result.getInt("id_categoria"));
+                rendimento.setDescricao(result.getString("descricao"));
+                rendimento.setValorMensal(result.getDouble("valor_mensal"));
+                rendimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                rendimento.setMes(result.getInt("mes"));
+                rendimento.setAno(result.getInt("ano"));
+                rendimento.calcularValorRendimento();
+
+                list.add(rendimento);
+            }
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+
+        return list;
+    }
+
+    public ArrayList<Rendimento> getRendimentoByYear(int year) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Rendimento> list = new ArrayList<Rendimento>();
+
+        try{
+            statement = conn.prepareStatement("SELECT * FROM rendimento WHERE ano = ? order by id");
+            statement.setInt(1, year);
+            result = statement.executeQuery();
+
+            while(result.next()){
+                Rendimento rendimento = new Rendimento();
+
+                rendimento.setId(result.getInt("id"));
+                rendimento.getCategoria().setId(result.getInt("id_categoria"));
+                rendimento.setDescricao(result.getString("descricao"));
+                rendimento.setValorMensal(result.getDouble("valor_mensal"));
+                rendimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                rendimento.setMes(result.getInt("mes"));
+                rendimento.setAno(result.getInt("ano"));
+                rendimento.calcularValorRendimento();
+
+                list.add(rendimento);
+            }
+        } finally {
+            BancoDados.finalizarStatement(statement);
+            BancoDados.finalizarResultSet(result);
+            BancoDados.desconectar();
+        }
+
+        return list;
+    }
+
+    public ArrayList<Rendimento> getRendimentoByCategory(int category) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        ArrayList<Rendimento> list = new ArrayList<Rendimento>();
+
+        try{
+            statement = conn.prepareStatement("SELECT * FROM rendimento WHERE id_categoria = ? order by id");
+            statement.setInt(1, category);
+            result = statement.executeQuery();
+
+            while(result.next()){
+                Rendimento rendimento = new Rendimento();
+
+                rendimento.setId(result.getInt("id"));
+                rendimento.getCategoria().setId(result.getInt("id_categoria"));
+                rendimento.setDescricao(result.getString("descricao"));
+                rendimento.setValorMensal(result.getDouble("valor_mensal"));
+                rendimento.setValorOcasional(result.getDouble("valor_ocasional"));
+                rendimento.setMes(result.getInt("mes"));
+                rendimento.setAno(result.getInt("ano"));
+                rendimento.calcularValorRendimento();
+
+                list.add(rendimento);
+            }
+            return list;
         } finally {
             BancoDados.finalizarStatement(statement);
             BancoDados.finalizarResultSet(result);
