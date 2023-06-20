@@ -1,68 +1,52 @@
 package entities;
 
-import java.util.ArrayList;
-
 public abstract class Resumo {
-    private String descricao;
     private double total;
-    private ArrayList<Rendimento> rendimento;
-    private ArrayList<Investimento> investimento;
-    private ArrayList<Fundo> fundo;
-    private ArrayList<Despesa> listaDespesas;
+    private double valorRendimentos;
+    private double valorInvestimentos;
+    private double valorFundos;
+    private double valorDespesas;
 
     public Resumo() {
-        this.calcularTotal();
     }
 
-    public abstract void calcularTotal();
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getTotal() {
-        return total;
-    }
+    public abstract double getTotalDisponivel();
+    public abstract double getFundoDespesasOcasionais();
+    public abstract double getValorTotal();
 
     public void setTotal(double total) {
         this.total = total;
     }
 
-    public ArrayList<Rendimento> getRendimento() {
-        return rendimento;
+    public double getValorRendimento() {
+        return valorRendimentos;
     }
 
-    public void setRendimento(ArrayList<Rendimento> rendimento) {
-        this.rendimento = rendimento;
+    public void setValorRendimento(double rendimento) {
+        this.valorRendimentos = rendimento;
     }
 
-    public ArrayList<Investimento> getInvestimento() {
-        return investimento;
+    public double getValorInvestimento() {
+        return valorInvestimentos;
     }
 
-    public void setInvestimento(ArrayList<Investimento> investimento) {
-        this.investimento = investimento;
+    public void setValorInvestimento(double valorInvestimento) {
+        this.valorInvestimentos = valorInvestimento;
     }
 
-    public ArrayList<Fundo> getFundo() {
-        return fundo;
+    public double getValorFundos() {
+        return valorFundos;
     }
 
-    public void setFundo(ArrayList<Fundo> fundo) {
-        this.fundo = fundo;
+    public void setValorFundos(double valorFundos) {
+        this.valorFundos = valorFundos;
     }
 
-    public ArrayList<Despesa> getListaDespesas() {
-        return listaDespesas;
+    public double getValorDespesas() {
+        return valorDespesas;
     }
 
-    public void setListaDespesas(ArrayList<Despesa> listaDespesas) {
-        this.listaDespesas = listaDespesas;
+    public void setValorDespesas(double valorDespesas) {
+        this.valorDespesas = valorDespesas;
     }
-
-    
 }
