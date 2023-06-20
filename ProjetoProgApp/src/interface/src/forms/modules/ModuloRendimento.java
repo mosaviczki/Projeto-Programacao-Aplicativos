@@ -342,9 +342,9 @@ public class ModuloRendimento extends javax.swing.JPanel {
                 } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
+                } finally {
+                        atualizarTabela();
                 }
-
-                atualizarTabela();
         }
 
         private void atualizarRendimento() {
@@ -370,8 +370,6 @@ public class ModuloRendimento extends javax.swing.JPanel {
                         rendimento.setId(id);
 
                         rendimentoService.updateRendimento(rendimento, nomeCategoria);
-
-                        atualizarTabela();
                 } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
                                         JOptionPane.ERROR_MESSAGE);
@@ -448,7 +446,8 @@ public class ModuloRendimento extends javax.swing.JPanel {
                                 }
                         }
                 } catch (Exception e) {
-                        System.out.println("Erro ao atualizar tabela");
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar tabela", "Erro",
+                                        JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
                 }
         }
