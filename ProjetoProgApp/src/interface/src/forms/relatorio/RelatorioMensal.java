@@ -1,8 +1,6 @@
 package forms.relatorio;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -17,110 +15,108 @@ import service.DespesaService;
 import service.FundoService;
 import service.InvestimentoService;
 import service.RendimentoService;
+import utils.FileHandler;
 import utils.MonthEnum;
 
 public class RelatorioMensal extends javax.swing.JPanel {
+    private String selectedMonth;
 
     public RelatorioMensal() {
         initComponents();
-        gridCards.setBackground(new Color(0,0,0,0));
-        btnDownload.setBackground(new Color(0,0,0,0));
-        
-        
+        gridCards.setBackground(new Color(0, 0, 0, 0));
+        btnDownload.setBackground(new Color(0, 0, 0, 0));
+
     }
 
-    private void findAllOfAll(int month) throws SQLException, IOException{
+    private void getLancamentoAllMonth() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.fireTableDataChanged();
         model.setRowCount(0);
 
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        int monthNumber = MonthEnum.getEnum(selectedMonth.toUpperCase());
 
+        try {
+            ArrayList<Rendimento> rendimentos = new RendimentoService().findAllRendimentosByMonth(monthNumber);
+            ArrayList<Despesa> despesas = new DespesaService().findAllDespesasByMonth(monthNumber);
+            ArrayList<Investimento> investimentos = new InvestimentoService().findAllInvestimentosByMonth(monthNumber);
+            ArrayList<Fundo> fundos = new FundoService().findAllFundosByMonth(monthNumber);
 
-        ArrayList<Rendimento> rendimentos = new RendimentoService().findAllRendimentosByMonth(month);
-
-        ArrayList<Despesa> despesas = new DespesaService().findAllDespesasByMonth(month);
-
-        ArrayList<Investimento> investimentos = new InvestimentoService().findAllInvestimentosByMonth(month);
-
-        ArrayList<Fundo> fundos = new FundoService().findAllFundosByMonth(month);
-
-
-        for (Rendimento rendimento : rendimentos) {
-            if(rendimento.getMes()==month){
-                model.addRow(new Object[] {
-                    "Rendimento",
-                    rendimento.getDescricao(),
-                    "R$ " + decimalFormat.format(rendimento.getValorMensal() + rendimento.getValorOcasional())
-                });
-            } else if(rendimento.getMes()<month && rendimento.getValorMensal()>0){
-                model.addRow(new Object[] {
-                    "Rendimento",
-                    rendimento.getDescricao(),
-                    "R$ " + decimalFormat.format(rendimento.getValorMensal())
-                });
-            }
-            
-
-        }
-
-        for (Despesa despesa : despesas) {
-            if(despesa.getMes()==month){
-                model.addRow(new Object[] {
-                    "Despesa",
-                    despesa.getDescricao(),
-                    "R$ " + decimalFormat.format(despesa.getValorMensal() + despesa.getValorOcasional())
-                });
-            } else if(despesa.getMes()<month && despesa.getValorMensal()>0){
-                model.addRow(new Object[] {
-                    "Despesa",
-                    despesa.getDescricao(),
-                    "R$ " + decimalFormat.format(despesa.getValorMensal())
-                });
-            }
-            
-        }
-
-        for (Investimento investimento : investimentos) {
-            if(investimento.getMes()==month){
-                model.addRow(new Object[] {
-                    "Investimento",
-                    investimento.getDescricao(),
-                    "R$ " + decimalFormat.format(investimento.getValorMensal() + investimento.getValorOcasional())
-                });
-            } else if(investimento.getMes()<month && investimento.getValorMensal()>0){
-                model.addRow(new Object[] {
-                    "Investimento",
-                    investimento.getDescricao(),
-                    "R$ " + decimalFormat.format(investimento.getValorMensal())
-                });
+            for (Rendimento rendimento : rendimentos) {
+                if (rendimento.getMes() == monthNumber)
+                    model.addRow(new Object[] {
+                            "Rendimento",
+                            rendimento.getDescricao(),
+                            "R$ " + decimalFormat.format(rendimento.getValorMensal() + rendimento.getValorOcasional())
+                    });
+                else if (rendimento.getMes() < monthNumber && rendimento.getValorMensal() > 0)
+                    model.addRow(new Object[] {
+                            "Rendimento",
+                            rendimento.getDescricao(),
+                            "R$ " + decimalFormat.format(rendimento.getValorMensal())
+                    });
             }
 
-        }
-
-        for (Fundo fundo : fundos) {
-            if(fundo.getMes()==month){
-                model.addRow(new Object[] {
-                    "Fundo",
-                    fundo.getDescricao(),
-                    "R$ " + decimalFormat.format(fundo.getValorMensal() + fundo.getValorOcasional())
-                });
-            } else if(fundo.getMes()<month && fundo.getValorMensal()>0){
-                model.addRow(new Object[] {
-                    "Fundo",
-                    fundo.getDescricao(),
-                    "R$ " + decimalFormat.format(fundo.getValorMensal())
-                });
+            for (Despesa despesa : despesas) {
+                if (despesa.getMes() == monthNumber)
+                    model.addRow(new Object[] {
+                            "Despesa",
+                            despesa.getDescricao(),
+                            "R$ " + decimalFormat.format(despesa.getValorMensal() + despesa.getValorOcasional())
+                    });
+                else if (despesa.getMes() < monthNumber && despesa.getValorMensal() > 0)
+                    model.addRow(new Object[] {
+                            "Despesa",
+                            despesa.getDescricao(),
+                            "R$ " + decimalFormat.format(despesa.getValorMensal())
+                    });
             }
-            
+
+            for (Investimento investimento : investimentos) {
+                if (investimento.getMes() == monthNumber)
+                    model.addRow(new Object[] {
+                            "Investimento",
+                            investimento.getDescricao(),
+                            "R$ " + decimalFormat
+                                    .format(investimento.getValorMensal() + investimento.getValorOcasional())
+                    });
+                else if (investimento.getMes() < monthNumber && investimento.getValorMensal() > 0)
+                    model.addRow(new Object[] {
+                            "Investimento",
+                            investimento.getDescricao(),
+                            "R$ " + decimalFormat.format(investimento.getValorMensal())
+                    });
+            }
+
+            for (Fundo fundo : fundos) {
+                if (fundo.getMes() == monthNumber)
+                    model.addRow(new Object[] {
+                            "Fundo",
+                            fundo.getDescricao(),
+                            "R$ " + decimalFormat.format(fundo.getValorMensal() + fundo.getValorOcasional())
+                    });
+                else if (fundo.getMes() < monthNumber && fundo.getValorMensal() > 0)
+                    model.addRow(new Object[] {
+                            "Fundo",
+                            fundo.getDescricao(),
+                            "R$ " + decimalFormat.format(fundo.getValorMensal())
+                    });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void baixarTabela() {
+        FileHandler.downloadFile(FileHandler.RELATORIO_MENSAL, table, selectedMonth);
     }
 
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbMes = new javax.swing.JComboBox<>();
         gridCards = new javax.swing.JPanel();
         cards = new forms.Cards();
         cards2 = new forms.Cards();
@@ -134,38 +130,19 @@ public class RelatorioMensal extends javax.swing.JPanel {
 
         table.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Tipo Lançamento", "Descrição", "Total"
-            }
-        ));
+                new Object[][] {
+                },
+                new String[] {
+                        "Tipo Lançamento", "Descrição", "Total"
+                }));
         jScrollPane1.setViewportView(table);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mês", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mês", "Janeiro", "Fevereiro",
+                "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        cbMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	try {
-                    findAllOfAll(MonthEnum.getEnum(jComboBox1.getSelectedItem().toString().toUpperCase()));
-                } catch (SQLException sqle) {
-                    JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                selectedMonth = cbMes.getSelectedItem().toString();
+                getLancamentoAllMonth();
             }
         });
 
@@ -198,61 +175,70 @@ public class RelatorioMensal extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelTitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 1036, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(labelTitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 1036,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(18, Short.MAX_VALUE)));
         jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(labelTitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
-        );
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addContainerGap(16, Short.MAX_VALUE)
+                                .addComponent(labelTitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 76,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14)));
 
         btnDownload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/download.png"))); // NOI18N
+        btnDownload.addActionListener(e -> baixarTabela());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(gridCards, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1)
+                                        .addComponent(gridCards, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                                                .createSequentialGroup()
+                                                .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(gridCards, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(gridCards, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnDownload, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                                                .createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 34,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDownload;
@@ -261,7 +247,7 @@ public class RelatorioMensal extends javax.swing.JPanel {
     private forms.Cards cards3;
     private forms.Cards cards4;
     private javax.swing.JPanel gridCards;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbMes;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
