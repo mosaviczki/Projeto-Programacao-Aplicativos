@@ -45,4 +45,19 @@ public class RendimentoService {
         conn = BancoDados.conectar();
         return new RendimentoDao(conn).findByName(name);
     }
+
+    public double getRendimentoTotal(int mes, int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new RendimentoDao(conn).getValueMonthTotal(mes, ano);
+    }
+
+    public double getRendimentoMensal(int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new RendimentoDao(conn).getValueYearMensal(ano);
+    }
+
+    public double getRendimentoOcasional(int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new RendimentoDao(conn).getValueYearOcasional(ano);
+    }
 }

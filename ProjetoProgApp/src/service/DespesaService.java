@@ -45,4 +45,19 @@ public class DespesaService {
         conn = BancoDados.conectar();
         return new DespesaDao(conn).findByName(name);
     }
+
+    public double getDespesaTotal(int mes, int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new DespesaDao(conn).getValueMonthTotal(mes, ano);
+    }
+
+    public double getDespesaMensal(int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new DespesaDao(conn).getValueYearMensal(ano);
+    }
+
+    public double getDespesaOcasional(int ano) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        return new DespesaDao(conn).getValueYearOcasional(ano);
+    }
 }
