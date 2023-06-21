@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import db.BancoDados;
 import dao.InvestimentoDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvestimentoService {
@@ -31,6 +32,13 @@ public class InvestimentoService {
     public List<Investimento> findAllInvestimento() throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new InvestimentoDao(conn).findAll();
+    }
+
+    public ArrayList<Investimento> findAllInvestimentosByMonth(int month) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Investimento> investimentos = new InvestimentoDao(conn).getInvestimentoByMonth(month);
+
+        return investimentos;
     }
 
     public double getInvestimentoTotal(int mes, int ano) throws SQLException, IOException {

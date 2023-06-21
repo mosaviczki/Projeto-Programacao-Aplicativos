@@ -1,6 +1,23 @@
 package forms.relatorio;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import entities.Despesa;
+import entities.Fundo;
+import entities.Investimento;
+import entities.Rendimento;
+import service.DespesaService;
+import service.FundoService;
+import service.InvestimentoService;
+import service.RendimentoService;
+import utils.MonthEnum;
 
 public class RelatorioMensal extends javax.swing.JPanel {
 
@@ -8,12 +25,66 @@ public class RelatorioMensal extends javax.swing.JPanel {
         initComponents();
         gridCards.setBackground(new Color(0,0,0,0));
         btnDownload.setBackground(new Color(0,0,0,0));
+        
+        
+    }
+
+    private void findAllOfAll(int month) throws SQLException, IOException{
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.fireTableDataChanged();
+        model.setRowCount(0);
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+
+        ArrayList<Rendimento> rendimentos = new RendimentoService().findAllRendimentosByMonth(month);
+
+        ArrayList<Despesa> despesas = new DespesaService().findAllDespesasByMonth(month);
+
+        ArrayList<Investimento> investimentos = new InvestimentoService().findAllInvestimentosByMonth(month);
+
+        ArrayList<Fundo> fundos = new FundoService().findAllFundosByMonth(month);
+
+
+        for (Rendimento rendimento : rendimentos) {
+            model.addRow(new Object[] {
+                    "Rendimento",
+                    rendimento.getDescricao(),
+                    "R$ " + decimalFormat.format(rendimento.getValorMensal() + rendimento.getValorOcasional())
+            });
+
+        }
+
+        for (Despesa despesa : despesas) {
+            model.addRow(new Object[] {
+                    "Despesa",
+                    despesa.getDescricao(),
+                    "R$ " + decimalFormat.format(despesa.getValorMensal()+ despesa.getValorOcasional())
+            });
+        }
+
+        for (Investimento investimento : investimentos) {
+            model.addRow(new Object[] {
+                    "Investimento",
+                    investimento.getDescricao(),
+                    "R$ " + decimalFormat.format(investimento.getValorMensal() + investimento.getValorOcasional())
+            });
+
+        }
+
+        for (Fundo fundo : fundos) {
+            model.addRow(new Object[] {
+                    "Fundo",
+                    fundo.getDescricao(),
+                    "R$ " + decimalFormat.format(fundo.getValorMensal()+ fundo.getValorOcasional())
+            });
+        }
     }
 
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
         gridCards = new javax.swing.JPanel();
         cards = new forms.Cards();
@@ -26,8 +97,8 @@ public class RelatorioMensal extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -43,15 +114,23 @@ public class RelatorioMensal extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "Descrição", "Total"
+                "Tipo Lançamento", "Descrição", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mês", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mês", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+            	try {
+                    findAllOfAll(MonthEnum.getEnum(jComboBox1.getSelectedItem().toString().toUpperCase()));
+                } catch (SQLException sqle) {
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -150,7 +229,7 @@ public class RelatorioMensal extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable table;
     private javax.swing.JLabel labelTitle3;
     // End of variables declaration//GEN-END:variables
 }

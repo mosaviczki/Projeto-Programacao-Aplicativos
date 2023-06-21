@@ -3,6 +3,7 @@ package service;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.FundoDao;
@@ -30,6 +31,13 @@ public class FundoService {
     public List<Fundo> findAllFundo() throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new FundoDao(conn).findAll();
+    }
+
+    public ArrayList<Fundo> findAllFundosByMonth(int month) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Fundo> fundos = new FundoDao(conn).getFundoByMonth(month);
+
+        return fundos;
     }
 
     public double getFundoTotal(int mes, int ano) throws SQLException, IOException {

@@ -41,6 +41,13 @@ public class DespesaService {
         return despesas;
     }
 
+    public ArrayList<Despesa> findAllDespesasByMonth(int month) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Despesa> despesas = new DespesaDao(conn).getDespesaByMonth(month);
+
+        return despesas;
+    }
+
     public Despesa findDespesaByName(String name) throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new DespesaDao(conn).findByName(name);
