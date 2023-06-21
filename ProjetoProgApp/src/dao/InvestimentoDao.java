@@ -193,7 +193,7 @@ public class InvestimentoDao{
         ArrayList<Investimento> list = new ArrayList<Investimento>();
 
         try{
-            statement = conn.prepareStatement("SELECT * FROM investimento WHERE mes = ? order by id");
+            statement = conn.prepareStatement("SELECT * FROM investimento WHERE mes <= ? order by id");
             statement.setInt(1, month);
             result = statement.executeQuery();
 

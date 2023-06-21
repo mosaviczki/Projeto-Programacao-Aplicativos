@@ -232,7 +232,7 @@ public class RendimentoDao {
         ArrayList<Rendimento> list = new ArrayList<Rendimento>();
 
         try{
-            statement = conn.prepareStatement("SELECT * FROM rendimento WHERE mes = ? order by id");
+            statement = conn.prepareStatement("SELECT * FROM rendimento WHERE mes <= ? order by id");
             statement.setInt(1, month);
             result = statement.executeQuery();
 

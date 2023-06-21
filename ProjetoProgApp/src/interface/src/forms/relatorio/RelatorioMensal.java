@@ -47,37 +47,72 @@ public class RelatorioMensal extends javax.swing.JPanel {
 
 
         for (Rendimento rendimento : rendimentos) {
-            model.addRow(new Object[] {
+            if(rendimento.getMes()==month){
+                model.addRow(new Object[] {
                     "Rendimento",
                     rendimento.getDescricao(),
                     "R$ " + decimalFormat.format(rendimento.getValorMensal() + rendimento.getValorOcasional())
-            });
+                });
+            } else if(rendimento.getMes()<month && rendimento.getValorMensal()>0){
+                model.addRow(new Object[] {
+                    "Rendimento",
+                    rendimento.getDescricao(),
+                    "R$ " + decimalFormat.format(rendimento.getValorMensal())
+                });
+            }
+            
 
         }
 
         for (Despesa despesa : despesas) {
-            model.addRow(new Object[] {
+            if(despesa.getMes()==month){
+                model.addRow(new Object[] {
                     "Despesa",
                     despesa.getDescricao(),
-                    "R$ " + decimalFormat.format(despesa.getValorMensal()+ despesa.getValorOcasional())
-            });
+                    "R$ " + decimalFormat.format(despesa.getValorMensal() + despesa.getValorOcasional())
+                });
+            } else if(despesa.getMes()<month && despesa.getValorMensal()>0){
+                model.addRow(new Object[] {
+                    "Despesa",
+                    despesa.getDescricao(),
+                    "R$ " + decimalFormat.format(despesa.getValorMensal())
+                });
+            }
+            
         }
 
         for (Investimento investimento : investimentos) {
-            model.addRow(new Object[] {
+            if(investimento.getMes()==month){
+                model.addRow(new Object[] {
                     "Investimento",
                     investimento.getDescricao(),
                     "R$ " + decimalFormat.format(investimento.getValorMensal() + investimento.getValorOcasional())
-            });
+                });
+            } else if(investimento.getMes()<month && investimento.getValorMensal()>0){
+                model.addRow(new Object[] {
+                    "Investimento",
+                    investimento.getDescricao(),
+                    "R$ " + decimalFormat.format(investimento.getValorMensal())
+                });
+            }
 
         }
 
         for (Fundo fundo : fundos) {
-            model.addRow(new Object[] {
+            if(fundo.getMes()==month){
+                model.addRow(new Object[] {
                     "Fundo",
                     fundo.getDescricao(),
-                    "R$ " + decimalFormat.format(fundo.getValorMensal()+ fundo.getValorOcasional())
-            });
+                    "R$ " + decimalFormat.format(fundo.getValorMensal() + fundo.getValorOcasional())
+                });
+            } else if(fundo.getMes()<month && fundo.getValorMensal()>0){
+                model.addRow(new Object[] {
+                    "Fundo",
+                    fundo.getDescricao(),
+                    "R$ " + decimalFormat.format(fundo.getValorMensal())
+                });
+            }
+            
         }
     }
 

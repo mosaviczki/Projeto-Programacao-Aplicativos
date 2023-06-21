@@ -194,7 +194,7 @@ public class FundoDao {
         ArrayList<Fundo> list = new ArrayList<Fundo>();
 
         try {
-            statement = conn.prepareStatement("select * from fundo where mes = ? order by id");
+            statement = conn.prepareStatement("select * from fundo where mes <= ? order by id");
             statement.setInt(1, month);
             result = statement.executeQuery();
 

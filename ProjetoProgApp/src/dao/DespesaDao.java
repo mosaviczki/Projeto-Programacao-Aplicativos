@@ -229,7 +229,7 @@ public class DespesaDao {
         ArrayList<Despesa> list = new ArrayList<Despesa>();
 
         try {
-            statement = conn.prepareStatement("select * from despesa where mes = ? order by id");
+            statement = conn.prepareStatement("select * from despesa where mes <= ? order by id");
             statement.setInt(1, month);
             result = statement.executeQuery();
 
