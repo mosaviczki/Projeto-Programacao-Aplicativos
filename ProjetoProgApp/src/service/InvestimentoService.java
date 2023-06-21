@@ -41,6 +41,13 @@ public class InvestimentoService {
         return investimentos;
     }
 
+    public ArrayList<Investimento> findAllInvestimentosByYear(int year) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Investimento> investimentos = new InvestimentoDao(conn).getInvestimentoByYear(year);
+
+        return investimentos;
+    }
+
     public double getInvestimentoTotal(int mes, int ano) throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new InvestimentoDao(conn).getValueMonthTotal(mes, ano);

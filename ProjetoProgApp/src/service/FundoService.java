@@ -40,6 +40,13 @@ public class FundoService {
         return fundos;
     }
 
+    public ArrayList<Fundo> findAllFundosByYear(int year) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Fundo> fundos = new FundoDao(conn).getFundoByYear(year);
+
+        return fundos;
+    }
+
     public double getFundoTotal(int mes, int ano) throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new FundoDao(conn).getValueMonthTotal(mes, ano);
