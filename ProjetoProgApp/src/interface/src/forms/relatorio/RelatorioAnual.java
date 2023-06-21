@@ -1,6 +1,22 @@
 package forms.relatorio;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import entities.Despesa;
+import entities.Fundo;
+import entities.Investimento;
+import entities.Rendimento;
+import service.DespesaService;
+import service.FundoService;
+import service.InvestimentoService;
+import service.RendimentoService;
 
 public class RelatorioAnual extends javax.swing.JPanel {
 
@@ -10,10 +26,67 @@ public class RelatorioAnual extends javax.swing.JPanel {
         btnDownload.setBackground(new Color(0,0,0,0));
     }
 
+    private void getLancametoAllYear(int year) throws SQLException, IOException{
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.fireTableDataChanged();
+        model.setRowCount(0);
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        ArrayList<Rendimento> rendimentos = new RendimentoService().findAllRendimentosByYear(year);
+
+        ArrayList<Despesa> despesas = new DespesaService().findAllDespesasByYear(year);
+
+        ArrayList<Investimento> investimentos = new InvestimentoService().findAllInvestimentosByYear(year);
+
+        ArrayList<Fundo> fundos = new FundoService().findAllFundosByYear(year);
+
+        for (Rendimento rendimento : rendimentos){
+            model.addRow(new Object[]{
+                "Rendimento",
+                rendimento.getDescricao(),
+                "R$ " + decimalFormat.format(rendimento.getValorMensal()*12),
+                "R$ " + decimalFormat.format(rendimento.getValorOcasional()),
+                "R$ " + decimalFormat.format(rendimento.getValorMensal()*12+rendimento.getValorOcasional())
+            });
+        }  
+        
+        for (Despesa despesa : despesas){
+            model.addRow(new Object[]{
+                "Despesa",
+                despesa.getDescricao(),
+                "R$ " + decimalFormat.format(despesa.getValorMensal()*12),
+                "R$ " + decimalFormat.format(despesa.getValorOcasional()),
+                "R$ " + decimalFormat.format(despesa.getValorMensal()*12+despesa.getValorOcasional())
+            });
+        }
+
+        for (Investimento investimento : investimentos){
+            model.addRow(new Object[]{
+                "Investimento",
+                investimento.getDescricao(),
+                "R$ " + decimalFormat.format(investimento.getValorMensal()*12),
+                "R$ " + decimalFormat.format(investimento.getValorOcasional()),
+                "R$ " + decimalFormat.format(investimento.getValorMensal()*12+investimento.getValorOcasional())
+            });
+        }
+
+        for (Fundo fundo : fundos){
+            model.addRow(new Object[]{
+                "Fundo",
+                fundo.getDescricao(),
+                "R$ " + decimalFormat.format(fundo.getValorMensal()*12),
+                "R$ " + decimalFormat.format(fundo.getValorOcasional()),
+                "R$ " + decimalFormat.format(fundo.getValorMensal()*12+fundo.getValorOcasional())
+            });
+        }
+
+    }
+
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         gridCards = new javax.swing.JPanel();
         cards = new forms.Cards();
         cards2 = new forms.Cards();
@@ -26,8 +99,8 @@ public class RelatorioAnual extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -43,10 +116,10 @@ public class RelatorioAnual extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Descrição", "Mensal (12x)", "Ocasional", "Total"
+                "Tipo Lançamento", "Descrição", "Mensal (12x)", "Ocasional", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
         gridCards.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -92,6 +165,19 @@ public class RelatorioAnual extends javax.swing.JPanel {
         );
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	try {
+                    getLancametoAllYear(Integer.parseInt(jComboBox1.getSelectedItem().toString()));
+                } catch (SQLException sqle) {
+                    JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados: " + sqle.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
         btnDownload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/download.png"))); // NOI18N
 
@@ -138,7 +224,7 @@ public class RelatorioAnual extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable table;
     private javax.swing.JLabel labelTitle3;
     // End of variables declaration//GEN-END:variables
 }

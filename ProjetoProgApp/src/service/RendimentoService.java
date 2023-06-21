@@ -48,6 +48,13 @@ public class RendimentoService {
         return rendimentos;
     }
 
+    public ArrayList<Rendimento> findAllRendimentosByYear(int year) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Rendimento> rendimentos = new RendimentoDao(conn).getRendimentoByYear(year);
+
+        return rendimentos;
+    }
+
     public Rendimento findRendimentoByName(String name) throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new RendimentoDao(conn).findByName(name);
