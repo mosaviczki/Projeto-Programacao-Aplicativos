@@ -133,7 +133,7 @@ public class RelatorioMensal extends javax.swing.JPanel {
                 new Object[][] {
                 },
                 new String[] {
-                        "Tipo Lançamento", "Descrição", "Total"
+                        "Tipo Lancamento", "Descricao", "Total"
                 }));
         jScrollPane1.setViewportView(table);
 
