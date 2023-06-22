@@ -1,0 +1,27 @@
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="interface/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="interface/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="interface/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="interface/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+>>>>>>> 4da58929eb36bfbfe2ec5a951249eabfccb4713a
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="interface/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="interface/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+>>>>>>> Stashed changes
