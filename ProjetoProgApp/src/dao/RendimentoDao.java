@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.BancoDados;
-import entities.Investimento;
 import entities.Rendimento;
 
 public class RendimentoDao {
