@@ -55,6 +55,13 @@ public class DespesaService {
         return despesas;
     }
 
+    public ArrayList<Despesa> findAllDespesasbyCategoria(int categoriaId) throws SQLException, IOException {
+        conn = BancoDados.conectar();
+        ArrayList<Despesa> despesas = new DespesaDao(conn).getDespesaByCategory(categoriaId);
+
+        return despesas;
+    }
+
     public Despesa findDespesaByName(String name) throws SQLException, IOException {
         conn = BancoDados.conectar();
         return new DespesaDao(conn).findByName(name);

@@ -8,11 +8,16 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import entities.Categoria;
+import entities.Despesa;
+import entities.Rendimento;
 import service.CategoriaService;
+import service.DespesaService;
+import service.RendimentoService;
 import utils.FileHandler;
 
 public class Organizacao extends javax.swing.JPanel {
     private CategoriaService categoriaService;
+    private String selectedCategoria;
 
     public Organizacao() {
         this.categoriaService = new CategoriaService();
@@ -22,6 +27,48 @@ public class Organizacao extends javax.swing.JPanel {
 
         gridCards.setBackground(new Color(0, 0, 0, 0));
         btnDownload.setBackground(new Color(0, 0, 0, 0));
+    }
+
+    private void getLancamentoAllCadastrar() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.fireTableDataChanged();
+        model.setRowCount(0);
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        
+
+        try {
+            int categoriaNumber = new CategoriaService().findCategoriaByName(selectedCategoria).getId();
+
+            ArrayList<Rendimento> rendimentos = new RendimentoService().findAllRendimentosbyCategoria(categoriaNumber);
+            ArrayList<Despesa> despesas = new DespesaService().findAllDespesasbyCategoria(categoriaNumber);
+
+            for (Rendimento rendimento : rendimentos) {
+                model.addRow(new Object[] {  
+                    rendimento.getDescricao(),
+                    "R$ " + decimalFormat.format(rendimento.getValorMensal()*12),
+                    "R$ " + decimalFormat.format(rendimento.getValorOcasional()),
+                    "R$ " + decimalFormat.format(rendimento.getValorMensal()*12+rendimento.getValorOcasional())
+                });
+                
+            }
+
+            for (Despesa despesa : despesas){
+                model.addRow(new Object[]{
+                    despesa.getDescricao(),
+                    "R$ " + decimalFormat.format(despesa.getValorMensal()*12),
+                    "R$ " + decimalFormat.format(despesa.getValorOcasional()),
+                    "R$ " + decimalFormat.format(despesa.getValorMensal()*12+despesa.getValorOcasional())
+                });
+            }
+            
+
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void initComponents() {
@@ -55,13 +102,14 @@ public class Organizacao extends javax.swing.JPanel {
                         { null, null, null }
                 },
                 new String[] {
-                        "Categoria", "Descrição", "Total"
+                        "Descrição", "Mensal (12x)", "Ocasional", "Total"
                 }));
         jScrollPane1.setViewportView(table);
 
         cbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCategoriaActionPerformed(evt);
+            	selectedCategoria = cbCategoria.getSelectedItem().toString();
+                getLancamentoAllCadastrar();
             }
         });
 
