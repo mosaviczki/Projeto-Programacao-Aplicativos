@@ -32,12 +32,21 @@ public class ModuloDespesas extends javax.swing.JPanel {
                                 try {
                                         if (despesaTable.isEditing())
                                                 despesaTable.getCellEditor().stopCellEditing();
-
-                                        despesaService.deleteDespesa((int) despesaTable.getValueAt(row, 0));
-                                        DefaultTableModel model = (DefaultTableModel) despesaTable.getModel();
-                                        model.removeRow(row);
+                                        if (JOptionPane.showConfirmDialog(null,
+                                                        "Tem certeza que deseja deletar esta despesa?",
+                                                        "Deletar despesa",
+                                                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                                despesaService.deleteDespesa(
+                                                                (int) despesaTable.getValueAt(row, 0));
+                                                JOptionPane.showMessageDialog(null, "Despesa deletado com sucesso!",
+                                                                "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                                                DefaultTableModel model = (DefaultTableModel) despesaTable
+                                                                .getModel();
+                                                model.removeRow(row);
+                                        }
                                 } catch (Exception e) {
-                                        JOptionPane.showMessageDialog(null, "Erro ao deletar despesa");
+                                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
+                                                        JOptionPane.ERROR_MESSAGE);
                                         e.printStackTrace();
                                 }
                         }
@@ -373,7 +382,7 @@ public class ModuloDespesas extends javax.swing.JPanel {
                 try {
                         if (despesaService.findDespesaByName(inputDespesa.getText()) != null) {
                                 int opcao = JOptionPane.showConfirmDialog(null,
-                                                "Rendimento já existe, deseja criar novo?", "Confirmação",
+                                                "Despesa já existe, deseja criar novo?", "Confirmação",
                                                 JOptionPane.YES_NO_OPTION);
                                 if (opcao == JOptionPane.NO_OPTION) {
                                         inputDespesa.setText("");

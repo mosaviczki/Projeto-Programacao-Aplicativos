@@ -24,16 +24,25 @@ public class ModuloFundo extends javax.swing.JPanel {
                         public void onDelete(int row) {
                                 FundoService fundoService = new FundoService();
                                 try {
-                                        fundoService.deleteFundo((int) table.getValueAt(row, 0));
-                                } catch (SQLException | IOException e) {
-                                        // TODO Auto-generated catch block
+                                        if (table.isEditing())
+                                                table.getCellEditor().stopCellEditing();
+                                        if (JOptionPane.showConfirmDialog(null,
+                                                        "Tem certeza que deseja deletar este fundo?",
+                                                        "Deletar fundo",
+                                                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                                fundoService.deleteFundo(
+                                                                (int) table.getValueAt(row, 0));
+                                                JOptionPane.showMessageDialog(null, "fundo deletado com sucesso!",
+                                                                "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                                                DefaultTableModel model = (DefaultTableModel) table
+                                                                .getModel();
+                                                model.removeRow(row);
+                                        }
+                                } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
+                                                        JOptionPane.ERROR_MESSAGE);
                                         e.printStackTrace();
                                 }
-                                if (table.isEditing()) {
-                                        table.getCellEditor().stopCellEditing();
-                                }
-                                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                                model.removeRow(row);
                         }
                 };
                 table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
