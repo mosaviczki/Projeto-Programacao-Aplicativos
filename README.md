@@ -3,7 +3,25 @@
 Implementação de um software de gestão de finanças pessoais que visa auxiliar os usuários a gerir suas contas pessoais.
 + Ideia de protótipo: https://www.figma.com/file/pHcuCQhOGTqEocL6sWzCNX/Interface-gr%C3%A1fica?type=design&node-id=0-1&t=RAizoX3BuWNq01fi-0
 
-# Tela inicial:
-![Pagina home - Relatório mensal](https://github.com/mosaviczki/Projeto-Programacao-Aplicativos/assets/88504003/8f531af2-178a-4038-9605-2335d655c6bf)
+## BIBLIOTECA
+Para configurar o sistema é necessario insatalar as seguintes bibliotecas:
+- mysql-connector-j-8.0.32
+- jcalendar-1.4
+
+## BANCO DE DADOS
+No banco de foram feitas 5 tabelas:
+- Categoria
+- Rendimento
+- Investimento
+- Despesa
+- Fundo
+
+Lembre de configurar o database.properties
+
+Obs: o arquivo do banco de dados foi mandado fundo do projeto (appdb.sql)
+
+
+## FUNCIONAMENTO
+Para rodar o software basta executar a main que esta em: ..\ProjetoProgApp\src\interface\src\programacaoaplicativos\main.java
 
 
