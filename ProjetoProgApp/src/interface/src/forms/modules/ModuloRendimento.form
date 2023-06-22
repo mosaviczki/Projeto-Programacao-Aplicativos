@@ -115,17 +115,19 @@
                           <Component id="btnAdd" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="inputDespesas" pref="438" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="titleExpense" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="inputMensal1" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="inputDespesas" min="-2" pref="334" max="-2" attributes="0"/>
+                      <Component id="titleExpense" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                      <Component id="titleExpense1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="inputMensal1" min="-2" pref="144" max="-2" attributes="0"/>
                       <Component id="titleOccasional" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -135,7 +137,8 @@
                           <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="inputMensal" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="inputMensal" min="-2" pref="144" max="-2" attributes="0"/>
                           <EmptySpace pref="7" max="32767" attributes="0"/>
                           <Component id="buttonAddExpense" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -153,19 +156,23 @@
                           <Component id="titleCategorias" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="titleExpense" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="titleMonthly" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="titleOccasional" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                          <Component id="titleMonthly" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="titleOccasional" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="titleExpense1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="inputDespesas" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="inputMensal1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="inputMensal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="buttonAddExpense" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="cbCategory" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnAdd" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="inputDespesas" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
@@ -246,6 +253,13 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+        </Component>
+        <Component class="javax.swing.JLabel" name="titleExpense1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Data"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

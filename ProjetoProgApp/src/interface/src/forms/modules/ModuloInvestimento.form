@@ -40,7 +40,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,7 +83,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="M&#xf3;dulo Fundo de Despesas Ocasionais"/>
+            <Property name="text" type="java.lang.String" value="M&#xf3;dulo de Investimento a Longo Prazo"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -108,10 +108,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="inputDespesas" min="-2" pref="628" max="-2" attributes="0"/>
-                      <Component id="titleExpense" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="inputDespesas" pref="469" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="titleExpense" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                      <Component id="titleExpense1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="inputMensal1" min="-2" pref="150" max="-2" attributes="0"/>
                       <Component id="titleOccasional" min="-2" max="-2" attributes="0"/>
@@ -135,12 +143,13 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="titleMonthly" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="titleOccasional" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="titleExpense" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="titleExpense1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -149,6 +158,7 @@
                       <Component id="inputMensal1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="inputMensal" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="buttonAddExpense" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
@@ -194,6 +204,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddExpenseActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JLabel" name="titleExpense1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Data"/>
+          </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -207,10 +224,10 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="12">
-                <Column editable="true" title="Fundo Ocasional" type="java.lang.Object"/>
+                <Column editable="true" title="Investimento" type="java.lang.Object"/>
                 <Column editable="true" title="Mensal " type="java.lang.Object"/>
                 <Column editable="true" title="Ocasional" type="java.lang.Object"/>
-                <Column editable="true" title="Total Anual" type="java.lang.Object"/>
+                <Column editable="true" title="Total" type="java.lang.Object"/>
                 <Column editable="true" title="" type="java.lang.Object"/>
               </Table>
             </Property>

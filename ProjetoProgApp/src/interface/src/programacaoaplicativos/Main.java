@@ -1,8 +1,8 @@
 package programacaoaplicativos;
 
+import forms.modules.ModuloFundo;
 import forms.modules.ModuloDespesas;
-import forms.modules.ModuloFundoDespesasOcasionais;
-import forms.modules.ModuloInvestimentoLongoPrazo;
+import forms.modules.ModuloInvestimento;
 import forms.modules.ModuloRendimento;
 import forms.modules.ModuloResumo;
 import forms.relatorio.Organizacao;
@@ -24,16 +24,16 @@ public class Main extends javax.swing.JFrame {
         setForm(new RelatorioMensal());
         execute();
     }
-    
+
     private void execute() {
         ImageIcon iconHome = new ImageIcon(getClass().getResource("/img/home.png"));
         ImageIcon iconModule = new ImageIcon(getClass().getResource("/img/modulo.png"));
         ImageIcon iconSubMenu = new ImageIcon(getClass().getResource("/img/circle.png"));
-        //menu itens
+        // menu itens
         MenuItem menuHome1 = new MenuItem(iconSubMenu, "Relatório Mensal", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-               setForm(new RelatorioMensal());
+                setForm(new RelatorioMensal());
             }
         });
         MenuItem menuHome2 = new MenuItem(iconSubMenu, "Relatório Anual", new ActionListener() {
@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
                 setForm(new Organizacao());
             }
         });
-        
+
         MenuItem menuModulo1 = new MenuItem(iconSubMenu, "Rendimento", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -64,13 +64,13 @@ public class Main extends javax.swing.JFrame {
         MenuItem menuModulo3 = new MenuItem(iconSubMenu, "Investimento a longo prazo", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new forms.modules.ModuloInvestimentoLongoPrazo());
+                setForm(new ModuloInvestimento());
             }
         });
         MenuItem menuModulo4 = new MenuItem(iconSubMenu, "Fundo de despesas ocasionais", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setForm(new ModuloFundoDespesasOcasionais());
+                setForm(new ModuloFundo());
             }
         });
         MenuItem menuModulo5 = new MenuItem(iconSubMenu, "Resumo", new ActionListener() {
@@ -79,26 +79,27 @@ public class Main extends javax.swing.JFrame {
                 setForm(new ModuloResumo());
             }
         });
-        
-        
+
         MenuItem menuHome = new MenuItem(iconHome, "Home", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 setForm(new RelatorioMensal());
             }
-        },menuHome1, menuHome2, menuHome3); 
-        MenuItem menuModule = new MenuItem(iconModule, "Modulo", null, menuModulo1,menuModulo2,menuModulo3,menuModulo4,menuModulo5);
+        }, menuHome1, menuHome2, menuHome3);
+        MenuItem menuModule = new MenuItem(iconModule, "Modulo", null, menuModulo1, menuModulo2, menuModulo3,
+                menuModulo4, menuModulo5);
 
         addMenu(menuHome, menuModule);
     }
-    
-    private void setForm(JComponent com){
+
+    private void setForm(JComponent com) {
         panelBody.removeAll();
         panelBody.add(com);
         panelBody.repaint();
         panelBody.revalidate();
     }
-    public void addMenu(MenuItem...menu){
+
+    public void addMenu(MenuItem... menu) {
         for (int i = 0; i < menu.length; i++) {
             menus.add(menu[i]);
             ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
@@ -110,8 +111,6 @@ public class Main extends javax.swing.JFrame {
         menus.revalidate();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel = new javax.swing.JPanel();
@@ -139,25 +138,25 @@ public class Main extends javax.swing.JFrame {
         javax.swing.GroupLayout sidebarLayout = new javax.swing.GroupLayout(sidebar);
         sidebar.setLayout(sidebarLayout);
         sidebarLayout.setHorizontalGroup(
-            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidebarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(sidebarLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(sidebarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addContainerGap())
+                        .addGroup(sidebarLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 178,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         sidebarLayout.setVerticalGroup(
-            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidebarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidebarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 165,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                                .addContainerGap()));
 
         jPanel.add(sidebar);
 
@@ -171,12 +170,16 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -194,7 +197,7 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
