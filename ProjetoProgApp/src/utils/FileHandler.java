@@ -47,34 +47,37 @@ public class FileHandler {
                 file.createNewFile();
             }
 
-            try {
-                if (!file.canWrite())
-                    throw new Exception("Sem permissao de escrita");
+            if (!file.canWrite())
+                throw new Exception("Sem permissao de escrita");
 
-                TableModel model = table.getModel();
+            TableModel model = table.getModel();
 
-                FileWriter fileWriter = new FileWriter(file);
-                for (int row = 0; row < model.getRowCount(); row++) {
-                    for (int col = 0; col < model.getColumnCount(); col++) {
-                        fileWriter.write(model.getValueAt(row, col).toString());
-                        fileWriter.write("\t");
-                    }
-                    fileWriter.write("\n");
+            FileWriter fileWriter = new FileWriter(file);
+
+            // Gravar o cabeçalho
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                fileWriter.write(model.getColumnName(col));
+                fileWriter.write("\t");
+            }
+            fileWriter.write("\n");
+
+            // Gravar as linhas
+            for (int row = 0; row < model.getRowCount(); row++) {
+                for (int col = 0; col < model.getColumnCount(); col++) {
+                    fileWriter.write(model.getValueAt(row, col).toString());
+                    fileWriter.write("\t");
                 }
-
-                fileWriter.close();
-
-                JOptionPane.showMessageDialog(null, "Arquivo baixado com sucesso!", "Download de arquivo",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao baixar arquivo:\n" + e.getMessage(), "Download de arquivo",
-                        JOptionPane.ERROR_MESSAGE);
-                System.out.println("Erro ao criar o arquivo Excel: " + e.getMessage());
+                fileWriter.write("\n");
             }
 
+            fileWriter.close();
+
+            JOptionPane.showMessageDialog(null, "Arquivo baixado com sucesso!", "Download de arquivo",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao baixar arquivo");
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao baixar arquivo:\n" + e.getMessage(), "Download de arquivo",
+                    JOptionPane.ERROR_MESSAGE);
+            System.out.println("Erro ao criar o arquivo Excel: " + e.getMessage());
         }
     }
 }
