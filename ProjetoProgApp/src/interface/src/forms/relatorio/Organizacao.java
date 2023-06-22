@@ -35,6 +35,8 @@ public class Organizacao extends javax.swing.JPanel {
                 model.setRowCount(0);
 
                 DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                int itens = 0;
+                double valorTotal = 0;
 
                 try {
                         int categoriaNumber = new CategoriaService().findCategoriaByName(selectedCategoria).getId();
@@ -44,6 +46,9 @@ public class Organizacao extends javax.swing.JPanel {
                         ArrayList<Despesa> despesas = new DespesaService().findAllDespesasbyCategoria(categoriaNumber);
 
                         for (Rendimento rendimento : rendimentos) {
+                                itens++;
+                                valorTotal += rendimento.getValorMensal() * 12
+                                                + rendimento.getValorOcasional();
                                 model.addRow(new Object[] {
                                                 rendimento.getDescricao(),
                                                 "R$ " + decimalFormat.format(rendimento.getValorMensal() * 12),
@@ -55,6 +60,9 @@ public class Organizacao extends javax.swing.JPanel {
                         }
 
                         for (Despesa despesa : despesas) {
+                                itens++;
+                                valorTotal += despesa.getValorMensal() * 12
+                                                + despesa.getValorOcasional();
                                 model.addRow(new Object[] {
                                                 despesa.getDescricao(),
                                                 "R$ " + decimalFormat.format(despesa.getValorMensal() * 12),
@@ -63,6 +71,9 @@ public class Organizacao extends javax.swing.JPanel {
                                                                 + despesa.getValorOcasional())
                                 });
                         }
+
+                        cardItens.setValue(itens + (itens != 1 ? " itens" : " item"));
+                        cardTotal.setValue("R$ " + decimalFormat.format(valorTotal));
                 } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
                                         JOptionPane.ERROR_MESSAGE);
@@ -74,8 +85,8 @@ public class Organizacao extends javax.swing.JPanel {
                 table = new javax.swing.JTable();
                 cbCategoria = new javax.swing.JComboBox<>();
                 gridCards = new javax.swing.JPanel();
-                cards = new forms.Cards();
-                cards2 = new forms.Cards();
+                cardItens = new forms.Cards();
+                cardTotal = new forms.Cards();
                 jPanel13 = new javax.swing.JPanel();
                 labelTitle10 = new javax.swing.JLabel();
                 btnDownload = new javax.swing.JButton();
@@ -91,18 +102,23 @@ public class Organizacao extends javax.swing.JPanel {
                                 }));
                 jScrollPane1.setViewportView(table);
 
+                cbCategoria.addItem("categoria");
                 cbCategoria.addActionListener(e -> cbCategoriaActionPerformed(e));
 
                 gridCards.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-                cards.setForeground(new java.awt.Color(255, 255, 255));
-                cards.setColor1(new java.awt.Color(25, 75, 255));
-                cards.setColor2(new java.awt.Color(0, 18, 83));
-                gridCards.add(cards);
+                cardItens.setForeground(new java.awt.Color(255, 255, 255));
+                cardItens.setColor1(new java.awt.Color(25, 75, 255));
+                cardItens.setColor2(new java.awt.Color(0, 18, 83));
+                cardItens.setTitle("Itens");
+                cardItens.setValue("0 itens");
+                gridCards.add(cardItens);
 
-                cards2.setColor1(new java.awt.Color(235, 173, 0));
-                cards2.setColor2(new java.awt.Color(160, 121, 20));
-                gridCards.add(cards2);
+                cardTotal.setColor1(new java.awt.Color(235, 173, 0));
+                cardTotal.setColor2(new java.awt.Color(160, 121, 20));
+                cardTotal.setTitle("Total");
+                cardTotal.setValue("R$ 0,00");
+                gridCards.add(cardTotal);
 
                 jPanel13.setBackground(new java.awt.Color(25, 75, 255));
 
@@ -208,8 +224,10 @@ public class Organizacao extends javax.swing.JPanel {
         }// </editor-fold>//GEN-END:initComponents
 
         private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBox1ActionPerformed
-                selectedCategoria = cbCategoria.getSelectedItem().toString();
-                getLancamentoAllCadastrar();
+                if (cbCategoria.getSelectedIndex() > 0) {
+                        selectedCategoria = cbCategoria.getSelectedItem().toString();
+                        getLancamentoAllCadastrar();
+                }
         }// GEN-LAST:event_jComboBox1ActionPerformed
 
         private void preencherCategorias() {
@@ -232,8 +250,8 @@ public class Organizacao extends javax.swing.JPanel {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton btnDownload;
-        private forms.Cards cards;
-        private forms.Cards cards2;
+        private forms.Cards cardItens;
+        private forms.Cards cardTotal;
         private javax.swing.JPanel gridCards;
         private javax.swing.JComboBox<String> cbCategoria;
         private javax.swing.JPanel jPanel13;
