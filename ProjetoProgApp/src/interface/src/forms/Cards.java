@@ -17,26 +17,21 @@ public class Cards extends javax.swing.JPanel {
         color2 = Color.WHITE;
     }
     
-
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
+        value = new javax.swing.JLabel();
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Icon");
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu Light", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Title");
+        title.setFont(new java.awt.Font("Ubuntu Light", 1, 14)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setText("Title");
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Value");
+        value.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        value.setForeground(new java.awt.Color(255, 255, 255));
+        value.setText("Value");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -45,8 +40,8 @@ public class Cards extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
+                    .addComponent(value)
+                    .addComponent(title)
                     .addComponent(jLabel1))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
@@ -56,9 +51,9 @@ public class Cards extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(title)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addComponent(value)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -91,10 +86,18 @@ public class Cards extends javax.swing.JPanel {
     public void setColor2(Color color2) {
         this.color2 = color2;
     }
+
+    public void setTitle(String title) {
+        this.title.setText(title);
+    }
+
+    public void setValue(String value) {
+        this.value.setText(value);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    protected javax.swing.JLabel jLabel1;
+    protected javax.swing.JLabel title;
+    protected javax.swing.JLabel value;
     // End of variables declaration//GEN-END:variables
 }
