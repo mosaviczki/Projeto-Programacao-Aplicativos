@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import javax.swing.ImageIcon;
+
 public class Cards extends javax.swing.JPanel {
 
     private Color color1, color2;
@@ -23,7 +25,7 @@ public class Cards extends javax.swing.JPanel {
         value = new javax.swing.JLabel();
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Icon");
+        jLabel1.setText("");
 
         title.setFont(new java.awt.Font("Ubuntu Light", 1, 14)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
@@ -59,7 +61,7 @@ public class Cards extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    protected void paintComponent(Graphics grphcs) {
+    protected void paintComponent(Graphics grphcs) { 
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint g = new GradientPaint(0, 0, color1, 0, getHeight(), color2);
