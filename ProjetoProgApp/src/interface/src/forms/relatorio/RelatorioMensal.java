@@ -33,6 +33,8 @@ public class RelatorioMensal extends javax.swing.JPanel {
         model.fireTableDataChanged();
         model.setRowCount(0);
 
+        double totalRendimentos=0.0, totalDespesa=0.0, totalInvestimentos=0.0, totalFundos=0.0;
+
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         int monthNumber = MonthEnum.getEnum(selectedMonth.toUpperCase());
 
@@ -43,65 +45,86 @@ public class RelatorioMensal extends javax.swing.JPanel {
             ArrayList<Fundo> fundos = new FundoService().findAllFundosByMonth(monthNumber);
 
             for (Rendimento rendimento : rendimentos) {
-                if (rendimento.getMes() == monthNumber)
+                if (rendimento.getMes() == monthNumber){
                     model.addRow(new Object[] {
                             "Rendimento",
                             rendimento.getDescricao(),
                             "R$ " + decimalFormat.format(rendimento.getValorMensal() + rendimento.getValorOcasional())
                     });
-                else if (rendimento.getMes() < monthNumber && rendimento.getValorMensal() > 0)
+                        totalRendimentos += rendimento.getValorMensal() + rendimento.getValorOcasional();
+                }
+                else if (rendimento.getMes() < monthNumber && rendimento.getValorMensal() > 0){
                     model.addRow(new Object[] {
                             "Rendimento",
                             rendimento.getDescricao(),
                             "R$ " + decimalFormat.format(rendimento.getValorMensal())
                     });
+                        totalRendimentos += rendimento.getValorMensal();
+                }
             }
 
             for (Despesa despesa : despesas) {
-                if (despesa.getMes() == monthNumber)
+                if (despesa.getMes() == monthNumber){
                     model.addRow(new Object[] {
                             "Despesa",
                             despesa.getDescricao(),
                             "R$ " + decimalFormat.format(despesa.getValorMensal() + despesa.getValorOcasional())
                     });
-                else if (despesa.getMes() < monthNumber && despesa.getValorMensal() > 0)
+                totalDespesa += despesa.getValorMensal() + despesa.getValorOcasional();
+                }
+                else if (despesa.getMes() < monthNumber && despesa.getValorMensal() > 0){
                     model.addRow(new Object[] {
                             "Despesa",
                             despesa.getDescricao(),
                             "R$ " + decimalFormat.format(despesa.getValorMensal())
                     });
+                totalDespesa += despesa.getValorMensal();
+                }
             }
 
             for (Investimento investimento : investimentos) {
-                if (investimento.getMes() == monthNumber)
+                if (investimento.getMes() == monthNumber){
                     model.addRow(new Object[] {
                             "Investimento",
                             investimento.getDescricao(),
                             "R$ " + decimalFormat
                                     .format(investimento.getValorMensal() + investimento.getValorOcasional())
                     });
-                else if (investimento.getMes() < monthNumber && investimento.getValorMensal() > 0)
+                totalInvestimentos += investimento.getValorMensal() + investimento.getValorOcasional();
+                }
+                else if (investimento.getMes() < monthNumber && investimento.getValorMensal() > 0){
                     model.addRow(new Object[] {
                             "Investimento",
                             investimento.getDescricao(),
                             "R$ " + decimalFormat.format(investimento.getValorMensal())
                     });
+                totalInvestimentos += investimento.getValorMensal();
+                }
             }
 
             for (Fundo fundo : fundos) {
-                if (fundo.getMes() == monthNumber)
+                if (fundo.getMes() == monthNumber){
                     model.addRow(new Object[] {
                             "Fundo",
                             fundo.getDescricao(),
                             "R$ " + decimalFormat.format(fundo.getValorMensal() + fundo.getValorOcasional())
                     });
-                else if (fundo.getMes() < monthNumber && fundo.getValorMensal() > 0)
+                totalFundos += fundo.getValorMensal() + fundo.getValorOcasional();
+                }
+                else if (fundo.getMes() < monthNumber && fundo.getValorMensal() > 0){
                     model.addRow(new Object[] {
                             "Fundo",
                             fundo.getDescricao(),
                             "R$ " + decimalFormat.format(fundo.getValorMensal())
                     });
+                totalFundos += fundo.getValorMensal();
+                }
             }
+        cards.setValor("R$ " + decimalFormat.format(totalRendimentos));
+        cards2.setValor("R$ " + decimalFormat.format(totalDespesa));
+        cards3.setValor("R$ " + decimalFormat.format(totalInvestimentos));
+        cards4.setValor("R$ " + decimalFormat.format(totalFundos));
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
                     JOptionPane.ERROR_MESSAGE);
@@ -151,18 +174,26 @@ public class RelatorioMensal extends javax.swing.JPanel {
         cards.setForeground(new java.awt.Color(255, 255, 255));
         cards.setColor1(new java.awt.Color(25, 75, 255));
         cards.setColor2(new java.awt.Color(0, 18, 83));
+        cards.setTitle("Rendimentos");
+        cards.setValue("R$ 0,00");
         gridCards.add(cards);
 
         cards2.setColor1(new java.awt.Color(235, 173, 0));
         cards2.setColor2(new java.awt.Color(160, 121, 20));
+        cards2.setTitle("Despesas");
+        cards2.setValue("R$ 0,00");
         gridCards.add(cards2);
 
         cards3.setColor1(new java.awt.Color(25, 75, 255));
         cards3.setColor2(new java.awt.Color(0, 18, 83));
+        cards3.setTitle("Investimentos");
+        cards3.setValue("R$ 0,00");
         gridCards.add(cards3);
 
         cards4.setColor1(new java.awt.Color(235, 173, 0));
         cards4.setColor2(new java.awt.Color(160, 121, 20));
+        cards4.setTitle("Fundos");
+        cards4.setValue("R$ 0,00");
         gridCards.add(cards4);
 
         jPanel6.setBackground(new java.awt.Color(25, 75, 255));
