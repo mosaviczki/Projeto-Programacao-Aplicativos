@@ -1,7 +1,5 @@
 package forms.modules;
 
-import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 
 public class ModuloResumo extends javax.swing.JPanel {
@@ -10,8 +8,6 @@ public class ModuloResumo extends javax.swing.JPanel {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -131,11 +127,9 @@ public class ModuloResumo extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioAnual;
     private javax.swing.JRadioButton jRadioMensal;
-    private javax.swing.JLabel labelTitle3;
     private javax.swing.JLabel labelTitle4;
     private javax.swing.JPanel panelResumo;
     // End of variables declaration//GEN-END:variables

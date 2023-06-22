@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.swing.ImageIcon;
-
 public class Cards extends javax.swing.JPanel {
 
     private Color color1, color2;
