@@ -120,10 +120,10 @@ public class RelatorioMensal extends javax.swing.JPanel {
                 totalFundos += fundo.getValorMensal();
                 }
             }
-        cards.setValor("R$ " + decimalFormat.format(totalRendimentos));
-        cards2.setValor("R$ " + decimalFormat.format(totalDespesa));
-        cards3.setValor("R$ " + decimalFormat.format(totalInvestimentos));
-        cards4.setValor("R$ " + decimalFormat.format(totalFundos));
+        cards.setValue("R$ " + decimalFormat.format(totalRendimentos));
+        cards2.setValue("R$ " + decimalFormat.format(totalDespesa));
+        cards3.setValue("R$ " + decimalFormat.format(totalInvestimentos));
+        cards4.setValue("R$ " + decimalFormat.format(totalFundos));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao preencher tabela: " + e.getMessage(), "Erro",
